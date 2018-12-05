@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="502.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Accordion layoutX="14.0" layoutY="14.0" />
+      <TabPane layoutX="14.0" layoutY="14.0" prefHeight="491.0" prefWidth="478.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Abilities">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="485.0" prefWidth="548.0">
+                     <children>
+                        <Accordion layoutX="255.0" layoutY="6.0" prefHeight="273.0" prefWidth="224.0">
+                          <panes>
+                            <TitledPane animated="false" prefHeight="57.0" prefWidth="209.0" text="StrPane">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                            <TitledPane animated="false" text="DexPane">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                            <TitledPane animated="false" prefHeight="27.0" prefWidth="155.0" text="ConPane">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                              <TitledPane animated="false" text="IntPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" prefHeight="0.0" prefWidth="202.0" text="WisPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" prefHeight="104.0" prefWidth="202.0" text="ChaPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" prefHeight="104.0" prefWidth="202.0" text="FortPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" prefHeight="104.0" prefWidth="202.0" text="RefPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" prefHeight="104.0" prefWidth="202.0" text="WillPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </TitledPane>
+                          </panes>
+                        </Accordion>
+                        <Accordion layoutY="23.0" prefHeight="255.0" prefWidth="255.0">
+                          <panes>
+                            <TitledPane animated="false" text="HealthPane">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                            <TitledPane animated="false" text="AcPane">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                            <TitledPane animated="false" text="ActPane">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </TitledPane>
+                              <TitledPane animated="false" text="InitPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" text="SpeedPane">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="20.0" prefWidth="244.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" text="Resist Elem">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="20.0" prefWidth="244.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" text="Resist Ener">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="20.0" prefWidth="244.0" />
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" text="Heroism">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="51.0" prefWidth="253.0" />
+                                 </content>
+                              </TitledPane>
+                          </panes>
+                        </Accordion>
+                        <Label layoutY="6.0" prefHeight="17.0" prefWidth="224.0" text="(NAME)" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Vitals">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
