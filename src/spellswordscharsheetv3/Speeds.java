@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spellswordscharactersheet_v3;
+package spellswordscharsheetv3;
 
 /**
  *
@@ -30,7 +30,7 @@ public class Speeds {
         return walk;
     }
     
-    public void setSwm(int newSwim) {
+    public void setSwim(int newSwim) {
         swim = newSwim;
     }
     

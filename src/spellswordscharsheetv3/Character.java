@@ -4,7 +4,7 @@
  * It should encapsulate all aspects of the character - from ability scores and 
  * beyond - and should be the gateway used by the gui.
  */
-package spellswordscharactersheet_v3;
+package spellswordscharsheetv3;
 import java.io.OutputStreamWriter;
 import java.io.IOException;
 import java.io.File;
@@ -143,6 +143,9 @@ public class Character {
     */
     Initiative initiative;
     
+    /*
+    * List of Feats
+    */
     Feats feats;
     
     public Character() {
