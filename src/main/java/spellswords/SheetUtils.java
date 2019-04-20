@@ -1,7 +1,7 @@
 /*
  * This is a helper class for the spellswords character sheet
  */
-package spellswordscharsheetv3;
+package spellswords;
 
 /**
  *

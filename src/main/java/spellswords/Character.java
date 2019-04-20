@@ -4,11 +4,7 @@
  * It should encapsulate all aspects of the character - from ability scores and 
  * beyond - and should be the gateway used by the gui.
  */
-package spellswordscharsheetv3;
-import java.io.OutputStreamWriter;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileOutputStream;
+package spellswords;
 
 import java.util.ArrayList;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spellswordscharsheetv3;
+package spellswords.charactersheet;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
