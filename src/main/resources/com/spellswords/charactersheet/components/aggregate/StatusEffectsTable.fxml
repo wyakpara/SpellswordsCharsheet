@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.spellswords.charactersheet.components.aggregate.Status?>
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane>
+            <Label text="Status Effects" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0" alignment="CENTER" styleClass="blackInverted"/>
+        </AnchorPane>
+        <HBox spacing="5">
+            <Label text="Effect" HBox.hgrow="ALWAYS" prefWidth="100" alignment="CENTER"/>
+            <Label text="Severity" HBox.hgrow="ALWAYS" prefWidth="50" alignment="CENTER"/>
+            <Label text="Consequences" HBox.hgrow="ALWAYS" prefWidth="164" alignment="CENTER"/>
+            <Label text="FF?" HBox.hgrow="ALWAYS" prefWidth="50" alignment="CENTER"/>
+            <Label text="Duration" HBox.hgrow="ALWAYS" prefWidth="100" alignment="CENTER"/>
+        </HBox>
+        <Status effect="Bleeding"/>
+        <Status effect="Blinded"/>
+        <Status effect="Confused"/>
+        <Status effect="Crippled"/>
+        <Status effect="Dazed"/>
+        <Status effect="Dazzled"/>
+        <Status effect="Deafened"/>
+        <Status effect="Entranced"/>
+        <Status effect="Fatigued"/>
+        <Status effect="Hasted"/>
+        <Status effect="Intoxicated"/>
+        <Status effect="Invincible"/>
+        <Status effect="Invisible"/>
+        <Status effect="Paralyzed"/>
+        <Status effect="Petrified"/>
+        <Status effect="Prone"/>
+        <Status effect="Rooted"/>
+        <Status effect="Scared"/>
+        <Status effect="Sickened"/>
+        <Status effect="Staggered"/>
+        <Status effect="Stunned"/>
+        <Status effect="Vulnerable"/>
+        <Status effect="New"/>
+
+    </children>
+</fx:root>

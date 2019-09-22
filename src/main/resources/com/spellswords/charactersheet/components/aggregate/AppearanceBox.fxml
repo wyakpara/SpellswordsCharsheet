@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.spellswords.charactersheet.components.base.*?>
+<?import javafx.scene.layout.HBox?>
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" spacing="5">
+    <HBox spacing="5">
+        <UnderLabeledText fx:id="gender" text="Gender"/>
+        <UnderLabeledText fx:id="age" text="Age"/>
+        <UnderLabeledText fx:id="height" text="Height"/>
+        <UnderLabeledText fx:id="weight" text="Weight"/>
+        <UnderLabeledText fx:id="eyes" text="Eyes"/>
+    </HBox>
+    <HBox spacing="5">
+        <UnderLabeledText fx:id="hair" text="Hair"/>
+        <UnderLabeledText fx:id="skin" text="Skin"/>
+        <UnderLabeledText fx:id="demeanor" text="Demeanor"/>
+    </HBox>
+</fx:root>

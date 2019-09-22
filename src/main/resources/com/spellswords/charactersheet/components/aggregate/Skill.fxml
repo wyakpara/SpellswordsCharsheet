@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         spacing="5">
+    <AnchorPane>
+        <Label fx:id="label" HBox.hgrow="ALWAYS" prefWidth="50" alignment="CENTER" styleClass="blackInverted"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.topAnchor="0.0"/>
+    </AnchorPane>
+    <HBox>
+        <TextField fx:id="score" HBox.hgrow="ALWAYS" prefWidth="50" styleClass="unmodifiable"/>
+        <TextField fx:id="mod" HBox.hgrow="ALWAYS" prefWidth="50" styleClass="unmodifiable"/>
+    </HBox>
+    <TextField fx:id="base" HBox.hgrow="ALWAYS" prefWidth="50"/>
+    <TextField fx:id="bonus" HBox.hgrow="ALWAYS" prefWidth="50"/>
+    <TextField fx:id="temp" HBox.hgrow="ALWAYS" prefWidth="50"/>
+    <TextField fx:id="other" HBox.hgrow="ALWAYS" prefWidth="50"/>
+</fx:root>

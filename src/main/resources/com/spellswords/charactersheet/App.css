@@ -1,0 +1,14 @@
+.unmodifiable {
+    -fx-background-color: rgb(198,217,240);
+    -fx-border-color: black;
+}
+
+.bordered {
+    -fx-border-color: black;
+}
+
+.blackInverted {
+    -fx-background-color: black;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import com.spellswords.charactersheet.components.base.UnderLabeledNode?>
+<fx:root type="UnderLabeledNode" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <over>
+        <TextField fx:id="input" maxWidth="1.7976931348623157E308"/>
+    </over>
+</fx:root>

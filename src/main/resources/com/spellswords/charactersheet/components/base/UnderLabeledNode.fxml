@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+<?import javafx.scene.layout.HBox?>
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox fx:id="nest"/>
+        <Label fx:id="label" maxWidth="1.7976931348623157E308" alignment="CENTER"/>
+    </children>
+</fx:root>

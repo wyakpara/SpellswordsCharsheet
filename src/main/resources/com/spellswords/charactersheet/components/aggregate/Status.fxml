@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1"
+         xmlns:fx="http://javafx.com/fxml/1" spacing="5">
+    <Label fx:id="effect" alignment="CENTER" prefWidth="100"/>
+    <TextField fx:id="severity" HBox.hgrow="ALWAYS" prefWidth="50"/>
+    <TextField fx:id="consequence" HBox.hgrow="ALWAYS" prefWidth="164"/>
+    <TextField fx:id="ffQuestion" HBox.hgrow="ALWAYS" prefWidth="50"/>
+    <HBox>
+        <TextField fx:id="durationOne" HBox.hgrow="ALWAYS" prefWidth="50"/>
+        <TextField fx:id="durationTwo" HBox.hgrow="ALWAYS" prefWidth="50"/>
+    </HBox>
+</fx:root>

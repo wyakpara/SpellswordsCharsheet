@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.spellswords.charactersheet.components.base.*?>
+<?import javafx.scene.layout.HBox?>
+<?import java.lang.String?>
+<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         spacing="5">
+    <UnderLabeledText fx:id="classBox" text="Class"/>
+    <UnderLabeledChoiceBox fx:id="die" text="Die">
+        <choices>
+            <String fx:value="4"/>
+            <String fx:value="6"/>
+            <String fx:value="8"/>
+            <String fx:value="10"/>
+            <String fx:value="12"/>
+        </choices>
+    </UnderLabeledChoiceBox>
+    <UnderLabeledText fx:id="level" text="Level"/>
+    <UnderLabeledText fx:id="skill" text="Skill"/>
+    <UnderLabeledChoiceBox fx:id="bab" text="BAB">
+        <choices>
+            <String fx:value="High"/>
+            <String fx:value="Medium"/>
+            <String fx:value="Low"/>
+        </choices>
+    </UnderLabeledChoiceBox>
+</fx:root>

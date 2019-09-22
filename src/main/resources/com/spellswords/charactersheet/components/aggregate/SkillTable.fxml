@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import com.spellswords.charactersheet.components.aggregate.Skill?>
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox spacing="5">
+            <Label text="Ability" HBox.hgrow="ALWAYS" prefWidth="50"/>
+            <HBox>
+                <Label text="Score" HBox.hgrow="ALWAYS" prefWidth="50"/>
+                <Label text="Mod" HBox.hgrow="ALWAYS" prefWidth="50"/>
+            </HBox>
+            <Label text="Base" HBox.hgrow="ALWAYS" prefWidth="50"/>
+            <Label text="Bonus" HBox.hgrow="ALWAYS" prefWidth="50"/>
+            <Label text="Temp" HBox.hgrow="ALWAYS" prefWidth="50"/>
+            <Label text="Other" HBox.hgrow="ALWAYS" prefWidth="50"/>
+        </HBox>
+        <Skill skill="STR"/>
+        <Skill skill="DEX"/>
+        <Skill skill="CON"/>
+        <Skill skill="INT"/>
+        <Skill skill="WIS"/>
+        <Skill skill="CHA"/>
+    </children>
+</fx:root>

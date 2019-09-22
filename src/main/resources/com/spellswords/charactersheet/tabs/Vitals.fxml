@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.spellswords.charactersheet.components.aggregate.ClassBox?>
+<?import com.spellswords.charactersheet.components.base.*?>
+<?import javafx.scene.layout.*?>
+<?import com.spellswords.charactersheet.components.aggregate.AppearanceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextField?>
+<?import com.spellswords.charactersheet.components.aggregate.Category?>
+<?import com.spellswords.charactersheet.components.aggregate.SkillTable?>
+<?import javafx.geometry.Insets?>
+<?import java.lang.String?>
+<?import com.spellswords.charactersheet.components.aggregate.StatusEffectTable?>
+<FlowPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+          minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.spellswords.charactersheet.logic.tabs.VitalsTab" vgap="5" hgap="20" >
+    <padding>
+        <Insets bottom="15.0" top="15.0" left="15.0" right="15.0"/>
+    </padding>
+    <HBox spacing="5">
+        <UnderLabeledText fx:id="charName" prefWidth="164.0"/>
+        <UnderLabeledText fx:id="playerName" prefWidth="164.0"/>
+        <UnderLabeledText fx:id="race" prefWidth="164.0"/>
+        <UnderLabeledChoiceBox fx:id="size" prefWidth="164.0">
+            <choices>
+                <String fx:value="Tiny"/>
+                <String fx:value="Small"/>
+                <String fx:value="Medium"/>
+                <String fx:value="Large"/>
+                <String fx:value="Huge"/>
+                <String fx:value="Gargantuan"/>
+            </choices>
+        </UnderLabeledChoiceBox>
+
+        <UnderLabeledText fx:id="alignment" prefWidth="164.0"/>
+        <UnderLabeledText fx:id="beliefs" prefWidth="164.0"/>
+    </HBox>
+    <HBox spacing="20">
+        <VBox spacing="5">
+            <ClassBox fx:id="classOne" classNum="1"/>
+            <ClassBox fx:id="classFour" classNum="4"/>
+        </VBox>
+        <VBox spacing="5">
+            <ClassBox fx:id="classTwo" classNum="2"/>
+            <ClassBox fx:id="classThree" classNum="3"/>
+        </VBox>
+    </HBox>
+    <AppearanceBox/>
+    <SkillTable/>
+    <Category text="Fatigue" styleClass="bordered">
+        <row>
+            <VBox spacing="5">
+                <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
+                    <UnderLabeledText text="Current"/>
+                    <UnderLabeledText text="Total" styleClass="unmodifiable"/>
+                    <UnderLabeledText text="Level"/>
+                    <UnderLabeledText text="Con"/>
+                    <UnderLabeledText text="Bonus"/>
+                </HBox>
+                <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
+                    <UnderLabeledText text="Lost"/>
+                    <UnderLabeledText text="Sub"/>
+                    <UnderLabeledText text="Temp"/>
+                </HBox>
+            </VBox>
+        </row>
+    </Category>
+    <HBox spacing="20" styleClass="bordered">
+        <Category text="Hit Points" >
+            <row>
+                <VBox spacing="5">
+                    <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
+                        <UnderLabeledText text="Current"/>
+                        <UnderLabeledText text="Total" styleClass="unmodifiable"/>
+                        <UnderLabeledText text="Level"/>
+                        <UnderLabeledText text="Con"/>
+                        <UnderLabeledText text="Bonus"/>
+                    </HBox>
+                    <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
+                        <UnderLabeledText text="Lost"/>
+                        <UnderLabeledText text="Sub"/>
+                        <UnderLabeledText text="Temp"/>
+                    </HBox>
+                </VBox>
+            </row>
+        </Category>
+        <VBox>
+            <Label text="" VBox.vgrow="ALWAYS"/>
+            <HBox spacing="5">
+                <UnderLabeledText text="Thresh"/>
+                <UnderLabeledText text="HP Per"/>
+            </HBox>
+        </VBox>
+    </HBox>
+    <StatusEffectTable/>
+</FlowPane>
