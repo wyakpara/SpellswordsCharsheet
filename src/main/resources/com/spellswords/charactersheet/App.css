@@ -12,3 +12,7 @@
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
+
+.zeroFont {
+    -fx-font-size: 0;
+}

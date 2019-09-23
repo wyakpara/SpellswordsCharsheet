@@ -15,7 +15,11 @@ public class StringConverters {
 
         @Override
         public Number fromString(String string) {
-            return Integer.parseInt(string);
+            if (string.length() == 0) {
+                return 0;
+            } else {
+                return Integer.parseInt(string);
+            }
         }
     }
 }

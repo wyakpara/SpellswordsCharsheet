@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import com.spellswords.charactersheet.components.base.AutosizeTextField?>
+<?import javafx.scene.control.Button?>
+<GridPane fx:id="featGrid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0" minWidth="0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.spellswords.charactersheet.logic.tabs.FeatsAndAbilitiesTab" hgap="5">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="5" />
+        <ColumnConstraints percentWidth="5" />
+        <ColumnConstraints percentWidth="30" />
+        <ColumnConstraints percentWidth="60" />
+    </columnConstraints>
+    <HBox fx:id="title" styleClass="blackInverted" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="0">
+        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="blackInverted" text="Special Abilities and Feats" HBox.hgrow="ALWAYS" />
+        <HBox>
+            <Label styleClass="blackInverted" text="M:" />
+            <AutosizeTextField styleClass="unmodifiable"/>
+        </HBox>
+        <HBox>
+            <Label styleClass="blackInverted" text="S:" />
+            <AutosizeTextField styleClass="unmodifiable"/>
+        </HBox>
+        <HBox>
+            <Label styleClass="blackInverted" text="P:" />
+            <AutosizeTextField styleClass="unmodifiable"/>
+        </HBox>
+        <HBox>
+            <Label styleClass="blackInverted" text="U:" />
+            <AutosizeTextField styleClass="unmodifiable"/>
+        </HBox>
+    </HBox>
+    <Label text="Cost" GridPane.columnIndex="0" GridPane.rowIndex="1" alignment="CENTER"/>
+    <Label text="Type" GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="CENTER"/>
+    <Label text="Name" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER"/>
+    <Label text="Description" GridPane.columnIndex="3" GridPane.rowIndex="1" alignment="CENTER"/>
+    <Button fx:id="addBtn" text="Add Feat" GridPane.rowIndex="2" onAction="#addFeat"/>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

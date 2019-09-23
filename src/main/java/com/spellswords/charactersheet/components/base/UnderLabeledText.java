@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class UnderLabeledText extends UnderLabeledNode {
 
-    @FXML public TextField input;
+    @FXML public AutosizeTextField input;
 
     public UnderLabeledText(@NamedArg(value = "prefWidth", defaultValue = "-1") double prefWidth,
                             @NamedArg(value = "text", defaultValue = "default") String text) {
@@ -34,10 +34,8 @@ public class UnderLabeledText extends UnderLabeledNode {
             return;
         }
         input.minWidthProperty().bind(super.minWidthProperty());
-        input.textProperty().addListener((obs, oldVal, newVal) -> {
-            computedResize();
-        });
-        computedResize();
+        input.computedResize();
+
 
         this.getStyleClass().addListener((ListChangeListener<? super String>) (obs) -> {
             while (obs.next()) {
@@ -50,11 +48,5 @@ public class UnderLabeledText extends UnderLabeledNode {
                 }
           }
         });
-    }
-
-    public void computedResize() {
-        var tmp = new Text(input.getText() + "XYZ");
-        double proposedWidth = tmp.getLayoutBounds().getWidth();
-        input.setPrefWidth(proposedWidth);
     }
 }

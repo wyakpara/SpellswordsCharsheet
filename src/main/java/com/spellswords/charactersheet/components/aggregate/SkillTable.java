@@ -54,28 +54,6 @@ public class SkillTable extends VBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//
-//        this.label.textProperty().bindBidirectional(this.text);
-//        this.text.set(text);
-//
-//        if (prefWidth == -1) {
-//            this.label.textProperty().addListener(((observable, oldValue, newValue) -> {
-//
-//                this.setMinComputedWidthByLabel();
-//            }));
-//        }
-//
-//        this.row.addListener((ListChangeListener<? super Node>) (obs) -> {
-//            while(obs.next()) {
-//                this.nest.getChildren().removeAll(obs.getRemoved());
-//                this.nest.getChildren().addAll(obs.getAddedSubList());
-//            }
-//        });
-//
-//        this.prefWidth.set(prefWidth);
-//        this.setMinWidth(prefWidth);
-//        System.err.println("after?");
-
     }
 
     public void settext(String txt) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         spacing="5">
+    <TextField fx:id="cost" HBox.hgrow="ALWAYS" prefWidth="50" styleClass="bordered"/>
+    <ChoiceBox fx:id="type" HBox.hgrow="ALWAYS" prefWidth="50" styleClass="bordered"/>
+    <TextField fx:id="name" HBox.hgrow="ALWAYS" prefWidth="50" styleClass="bordered"/>
+    <TextField fx:id="description" HBox.hgrow="ALWAYS" prefWidth="50" styleClass="bordered"/>
+</fx:root>

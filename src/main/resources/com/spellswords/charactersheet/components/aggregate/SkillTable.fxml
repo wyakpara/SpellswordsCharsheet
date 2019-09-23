@@ -15,7 +15,7 @@
             </HBox>
             <Label text="Base" HBox.hgrow="ALWAYS" prefWidth="50"/>
             <Label text="Bonus" HBox.hgrow="ALWAYS" prefWidth="50"/>
-            <Label text="Temp" HBox.hgrow="ALWAYS" prefWidth="50"/>
+            <Label text="Temp" HBox.hgrow="ALWAYS" prefWidth="50" />
             <Label text="Other" HBox.hgrow="ALWAYS" prefWidth="50"/>
         </HBox>
         <Skill skill="STR"/>
