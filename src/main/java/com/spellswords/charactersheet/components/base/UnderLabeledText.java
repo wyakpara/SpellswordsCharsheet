@@ -8,9 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UnderLabeledText extends UnderLabeledNode {
+public class UnderLabeledText extends UnderLabeledNode implements Serializable {
 
     @FXML public AutosizeTextField input;
 
@@ -49,4 +52,16 @@ public class UnderLabeledText extends UnderLabeledNode {
           }
         });
     }
+
+//    public void writeObject(ObjectOutputStream out) throws IOException {
+////        super.writeObject(out);
+//        out.defaultWriteObject();
+//        out.writeDouble(this.prefWidth.getValue());
+//    }
+
+//    public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+////        super.readObject(in);
+//        in.defaultReadObject();
+//        this.prefWidth.setValue(in.readDouble());
+//    }
 }

@@ -8,9 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class AutosizeTextField extends TextField {
+public class AutosizeTextField extends TextField implements Serializable {
 
     public AutosizeTextField() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AutosizeTextField.fxml"));
@@ -46,5 +49,17 @@ public class AutosizeTextField extends TextField {
         var tmp = new Text(this.getText() + "XYZ");
         double proposedWidth = tmp.getLayoutBounds().getWidth();
         this.setPrefWidth(proposedWidth);
+    }
+
+    public void writeObject(ObjectOutputStream out) throws IOException {
+//        super.writeObject(out);
+        out.defaultWriteObject();
+        out.writeUTF(this.textProperty().get());
+    }
+
+    public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+//        super.readObject(in);
+        in.defaultReadObject();
+        this.textProperty().setValue(in.readUTF());
     }
 }

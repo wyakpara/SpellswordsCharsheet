@@ -7,10 +7,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import org.controlsfx.tools.Borders;
 
 import java.io.IOException;
+
 
 public class ClassBox extends HBox {
 

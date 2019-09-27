@@ -4,6 +4,8 @@ module com.spellswords.charactersheet {
     requires javafx.graphics;
     requires java.logging;
     requires org.controlsfx.controls;
+    requires java.xml.bind;
+    requires com.sun.xml.bind;
 
     exports com.spellswords.charactersheet to
             javafx.graphics,
@@ -20,7 +22,12 @@ module com.spellswords.charactersheet {
     exports com.spellswords.charactersheet.components.aggregate to
             javafx.fxml;
 
+    opens com.spellswords.charactersheet to
+            javafx.graphics,
+            javafx.fxml;
+
     opens com.spellswords.charactersheet.logic.tabs to
+            java.xml.bind,
             javafx.fxml;
 
     opens com.spellswords.charactersheet.components.base to
@@ -29,6 +36,7 @@ module com.spellswords.charactersheet {
 
     opens com.spellswords.charactersheet.components.aggregate to
             javafx.graphics,
-            javafx.fxml;
+            javafx.fxml,
+            com.sun.xml.bind;
 
 }
