@@ -4,16 +4,11 @@ import javafx.beans.NamedArg;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Objects;
 
-public class UnderLabeledText extends UnderLabeledNode implements Serializable {
+public class UnderLabeledText extends UnderLabeledNode {
 
     @FXML public AutosizeTextField input;
 
@@ -52,16 +47,4 @@ public class UnderLabeledText extends UnderLabeledNode implements Serializable {
           }
         });
     }
-
-//    public void writeObject(ObjectOutputStream out) throws IOException {
-////        super.writeObject(out);
-//        out.defaultWriteObject();
-//        out.writeDouble(this.prefWidth.getValue());
-//    }
-
-//    public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-////        super.readObject(in);
-//        in.defaultReadObject();
-//        this.prefWidth.setValue(in.readDouble());
-//    }
 }

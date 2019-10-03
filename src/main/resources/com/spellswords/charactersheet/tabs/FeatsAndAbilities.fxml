@@ -8,7 +8,7 @@
 
 <?import com.spellswords.charactersheet.components.base.AutosizeTextField?>
 <?import javafx.scene.control.Button?>
-<GridPane fx:id="featGrid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0" minWidth="0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.spellswords.charactersheet.logic.tabs.FeatsAndAbilitiesTab" hgap="5">
+<GridPane fx:id="featGrid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0" minWidth="0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.spellswords.charactersheet.components.tabs.FeatsAndAbilitiesTab" hgap="5">
     <columnConstraints>
         <ColumnConstraints percentWidth="5" />
         <ColumnConstraints percentWidth="5" />

@@ -1,4 +1,4 @@
-package com.spellswords.charactersheet.logic.tabs;
+package com.spellswords.charactersheet.components.tabs;
 
 import com.spellswords.charactersheet.FxmlControl;
 import com.spellswords.charactersheet.components.aggregate.Feat;

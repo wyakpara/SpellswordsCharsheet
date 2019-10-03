@@ -1,4 +1,4 @@
-package com.spellswords.charactersheet.logic.tabs;
+package com.spellswords.charactersheet.components.tabs;
 
 import com.spellswords.charactersheet.components.aggregate.ClassBox;
 import com.spellswords.charactersheet.components.base.UnderLabeledChoiceBox;
@@ -9,7 +9,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ArmoryTab implements Initializable {
+public class PowerListTab implements Initializable {
 
     @FXML ClassBox classTwo;
     @FXML ClassBox classOne;

@@ -1,6 +1,6 @@
 package com.spellswords.charactersheet;
 
-import com.spellswords.charactersheet.logic.tabs.*;
+import com.spellswords.charactersheet.components.tabs.*;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;

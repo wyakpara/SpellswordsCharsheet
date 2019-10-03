@@ -5,6 +5,7 @@
  */
 package com.spellswords.charactersheet;
 
+import com.spellswords.charactersheet.components.tabs.VitalsTab;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Didge
@@ -22,6 +25,8 @@ public class CharacterSheet extends Application {
     private FxmlControl<App, VBox> app;
     private static String TAB = "Tab.fxml";
     private static String APP = "App.fxml";
+
+    public static Map<String, Object> REGISTRY = new HashMap<>();
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -33,7 +38,6 @@ public class CharacterSheet extends Application {
             tab.root.setText(tabInfo.name);
 
             contr.addTab(tab);
-
             tab.root.setContent(tabInfo.control.root);
         }
 

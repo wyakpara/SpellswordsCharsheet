@@ -15,7 +15,14 @@ module com.spellswords.charactersheet {
             javafx.graphics,
             javafx.fxml;
 
+    exports com.spellswords.charactersheet.logic.aggregate to
+            com.sun.xml.bind;
+
     exports com.spellswords.charactersheet.components.base to
+            javafx.graphics,
+            javafx.fxml;
+
+    exports com.spellswords.charactersheet.components.tabs to
             javafx.graphics,
             javafx.fxml;
 
@@ -38,5 +45,11 @@ module com.spellswords.charactersheet {
             javafx.graphics,
             javafx.fxml,
             com.sun.xml.bind;
+
+    opens com.spellswords.charactersheet.components.tabs to
+            javafx.graphics,
+            javafx.fxml,
+            java.xml.bind;
+
 
 }
