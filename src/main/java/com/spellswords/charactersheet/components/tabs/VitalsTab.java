@@ -51,7 +51,7 @@ public class VitalsTab implements Initializable {
     }
 
     public void setModel(VitalsModel vMod) {
-        if (Objects.nonNull(model)) clearBindings();
+        if (Objects.nonNull(model)) model.clearBindings();
 
         model = vMod;
         model.bind(this);
@@ -62,14 +62,5 @@ public class VitalsTab implements Initializable {
         App.app.open.setOnAction((event) -> {
             model.load(new File("test.xml"));
         });
-    }
-
-    private void clearBindings() {
-        charName.input.textProperty().unbindBidirectional(charName);
-        playerName.input.textProperty().unbindBidirectional(playerName);
-        race.input.textProperty().unbindBidirectional(race);
-//        size.choiceBox.selectionModelProperty().unbindBidirectional(size);
-        alignment.input.textProperty().unbindBidirectional(alignment);
-        beliefs.input.textProperty().unbindBidirectional(beliefs);
     }
 }

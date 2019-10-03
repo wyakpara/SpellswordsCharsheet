@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.*;
 import java.io.*;
 
 @XmlRootElement(name = "vitals")
-@XmlType(propOrder={"charName", "playerName", "race", "alignment", "beliefs", "size", "classOne"})
+@XmlType(propOrder={"charName", "playerName", "race", "alignment", "beliefs", "size", "classOne", "classTwo", "classThree", "classFour"})
 public class VitalsModel implements Serializable {
 
 
@@ -71,9 +71,12 @@ public class VitalsModel implements Serializable {
 
     @XmlElement()
     public ClassBoxModel classOne = new ClassBoxModel();
-//    public ClassBoxModel classTwo;
-//    public ClassBoxModel classThree;
-//    public ClassBoxModel classFour;
+    @XmlElement()
+    public ClassBoxModel classTwo = new ClassBoxModel();
+    @XmlElement()
+    public ClassBoxModel classThree = new ClassBoxModel();
+    @XmlElement()
+    public ClassBoxModel classFour = new ClassBoxModel();
     @XmlTransient
     public SimpleStringProperty charName = new SimpleStringProperty();
     @XmlTransient
@@ -100,9 +103,9 @@ public class VitalsModel implements Serializable {
 
     public void bind(VitalsTab vitalsTab) {
         classOne.bind(vitalsTab.classOne);
-//        classTwo.bind(vitalsTab.classTwo);
-//        classThree.bind(vitalsTab.classThree);
-//        classFour.bind(vitalsTab.classFour);
+        classTwo.bind(vitalsTab.classTwo);
+        classThree.bind(vitalsTab.classThree);
+        classFour.bind(vitalsTab.classFour);
         charName.bindBidirectional(vitalsTab.charName.input.textProperty());
         playerName.bindBidirectional(vitalsTab.playerName.input.textProperty());
         race.bindBidirectional(vitalsTab.race.input.textProperty());
@@ -164,5 +167,21 @@ public class VitalsModel implements Serializable {
         alignment.set(model.alignment.get());
         beliefs.set(model.beliefs.get());
         classOne.copy(model.classOne);
+        classTwo.copy(model.classTwo);
+        classThree.copy(model.classThree);
+        classFour.copy(model.classFour);
+    }
+
+    public void clearBindings() {
+        charName.unbindBidirectional(tab.charName.input.textProperty());
+        playerName.unbindBidirectional(tab.playerName.input.textProperty());
+        race.unbindBidirectional(tab.race.input.textProperty());
+        size.unbindBidirectional(tab.size.choiceBox.valueProperty());
+        alignment.unbindBidirectional(tab.alignment.input.textProperty());
+        beliefs.unbindBidirectional(tab.beliefs.input.textProperty());
+        this.classOne.clearBindings();
+        this.classTwo.clearBindings();
+        this.classThree.clearBindings();
+        this.classFour.clearBindings();
     }
 }

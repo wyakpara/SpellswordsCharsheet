@@ -1,35 +1,24 @@
 package com.spellswords.charactersheet.logic.aggregate;
 
 import com.spellswords.charactersheet.components.aggregate.ClassBox;
-import com.spellswords.charactersheet.components.base.UnderLabeledChoiceBox;
-import com.spellswords.charactersheet.components.base.UnderLabeledText;
-import com.spellswords.charactersheet.logic.tabs.VitalsModel;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAccessorOrder;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.Objects;
 
 @XmlRootElement
-@XmlType(propOrder = {"classBox", "die", "level", "skill", "bab"})
+@XmlType(propOrder = {"classBoxField", "die", "level", "skill", "bab"})
 public class ClassBoxModel implements Serializable {
 
 //    @XmlTransient
 //    private final SimpleIntegerProperty classNum = new SimpleIntegerProperty();
 
     @XmlTransient
-    @FXML public SimpleStringProperty classBox = new SimpleStringProperty();
+    @FXML public SimpleStringProperty classBoxField = new SimpleStringProperty();
     @XmlTransient
     @FXML public SimpleStringProperty die = new SimpleStringProperty();
     @XmlTransient
@@ -39,12 +28,19 @@ public class ClassBoxModel implements Serializable {
     @XmlTransient
     @FXML public SimpleStringProperty bab = new SimpleStringProperty();
 
-    public String getClassBox() {
-        return classBox.get();
+    @XmlTransient
+    private ClassBox classBox;
+
+    public void setClassBox(ClassBox classBox) {
+        this.classBox = classBox;
     }
 
-    public void setClassBox(String classBox) {
-        this.classBox.set(classBox);
+    public String getClassBoxField() {
+        return classBoxField.get();
+    }
+
+    public void setClassBoxField(String classBoxField) {
+        this.classBoxField.set(classBoxField);
     }
 
     public String getDie() {
@@ -79,21 +75,30 @@ public class ClassBoxModel implements Serializable {
         this.bab.set(bab);
     }
 
-
-
     public void copy(ClassBoxModel model) {
-        classBox.set(model.classBox.get());
+        classBoxField.set(model.classBoxField.get());
         die.set(model.die.get());
         level.set(model.level.get());
         skill.set(model.skill.get());
         bab.set(model.bab.get());
     }
 
-    public void bind(ClassBox classOne) {
-        classBox.bindBidirectional(classOne.classBox.input.textProperty());
-        die.bindBidirectional(classOne.die.choiceBox.valueProperty());
-        level.bindBidirectional(classOne.level.input.textProperty());
-        skill.bindBidirectional(classOne.skill.input.textProperty());
-        bab.bindBidirectional(classOne.bab.choiceBox.valueProperty());
+    public void bind(ClassBox clsBox) {
+        classBoxField.bindBidirectional(clsBox.classBox.input.textProperty());
+        die.bindBidirectional(clsBox.die.choiceBox.valueProperty());
+        level.bindBidirectional(clsBox.level.input.textProperty());
+        skill.bindBidirectional(clsBox.skill.input.textProperty());
+        bab.bindBidirectional(clsBox.bab.choiceBox.valueProperty());
+        this.classBox = clsBox;
+    }
+
+    public void clearBindings() {
+        Objects.requireNonNull(classBox);
+        classBoxField.bindBidirectional(classBox.classBox.input.textProperty());
+        die.bindBidirectional(classBox.die.choiceBox.valueProperty());
+        level.bindBidirectional(classBox.level.input.textProperty());
+        skill.bindBidirectional(classBox.skill.input.textProperty());
+        bab.bindBidirectional(classBox.bab.choiceBox.valueProperty());
+        this.classBox = null;
     }
 }

@@ -41,6 +41,9 @@ module com.spellswords.charactersheet {
             javafx.graphics,
             javafx.fxml;
 
+    opens com.spellswords.charactersheet.logic.aggregate to
+            com.sun.xml.bind;
+
     opens com.spellswords.charactersheet.components.aggregate to
             javafx.graphics,
             javafx.fxml,
