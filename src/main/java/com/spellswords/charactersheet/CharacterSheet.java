@@ -46,8 +46,8 @@ public class CharacterSheet extends Application {
         scene.getStylesheets().add(getClass().getResource("App.css").toExternalForm());
 
         primaryStage.setTitle("Versebender!");
-        primaryStage.setHeight(760);
-        primaryStage.setWidth(1080);
+        primaryStage.setHeight(900);
+        primaryStage.setWidth(1050);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

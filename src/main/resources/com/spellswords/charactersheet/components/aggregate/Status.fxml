@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1"
+<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.0"
          xmlns:fx="http://javafx.com/fxml/1" spacing="5">
     <Label fx:id="effect" alignment="CENTER" prefWidth="100"/>
     <TextField fx:id="severity" HBox.hgrow="ALWAYS" prefWidth="50"/>

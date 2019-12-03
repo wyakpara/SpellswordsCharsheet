@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import com.spellswords.charactersheet.components.base.UnderLabeledText?>
+<?import com.spellswords.charactersheet.components.aggregate.Category?>
+<fx:root type="Category" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1">
+    <row>
+        <HBox spacing="20">
+            <VBox spacing="5">
+                <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
+                    <UnderLabeledText text="Current" fx:id="current"/>
+                    <UnderLabeledText text="Total" styleClass="unmodifiable" fx:id="total"/>
+                    <UnderLabeledText text="Level" fx:id="level"/>
+                    <UnderLabeledText text="Con" fx:id="con"/>
+                    <UnderLabeledText text="Bonus" fx:id="bonus"/>
+                </HBox>
+                <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
+                    <UnderLabeledText text="Lost" fx:id="lost"/>
+                    <UnderLabeledText text="Sub" fx:id="sub"/>
+                    <UnderLabeledText text="Temp" fx:id="temp"/>
+                </HBox>
+            </VBox>
+            <VBox>
+                <HBox spacing="5">
+                    <UnderLabeledText text="Thresh" fx:id="thresh"/>
+                    <UnderLabeledText text="HP Per" fx:id="hpPer"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </row>
+</fx:root>

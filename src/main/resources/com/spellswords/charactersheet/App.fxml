@@ -8,7 +8,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <VBox fx:controller="com.spellswords.charactersheet.App" maxHeight="-Infinity" maxWidth="-Infinity"
       minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="502.0"
-      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+      xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1">
     <MenuBar fx:id="menuBar">
         <menus>
             <Menu text="File">

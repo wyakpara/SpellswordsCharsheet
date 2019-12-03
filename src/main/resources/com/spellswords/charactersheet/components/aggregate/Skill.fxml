@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<fx:root type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1"
          spacing="5">
     <AnchorPane>
         <Label fx:id="label" HBox.hgrow="ALWAYS" prefWidth="50" alignment="CENTER" styleClass="blackInverted"

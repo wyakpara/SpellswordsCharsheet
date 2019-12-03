@@ -1,7 +1,7 @@
 package com.spellswords.charactersheet.components.tabs;
 
 import com.spellswords.charactersheet.App;
-import com.spellswords.charactersheet.components.aggregate.ClassBox;
+import com.spellswords.charactersheet.components.aggregate.*;
 import com.spellswords.charactersheet.components.base.UnderLabeledChoiceBox;
 import com.spellswords.charactersheet.components.base.UnderLabeledText;
 import com.spellswords.charactersheet.logic.tabs.VitalsModel;
@@ -16,16 +16,25 @@ import java.util.ResourceBundle;
 
 public class VitalsTab implements Initializable {
 
-    @FXML public ClassBox classTwo;
-    @FXML public ClassBox classOne;
-    @FXML public ClassBox classThree;
-    @FXML public ClassBox classFour;
     @FXML public UnderLabeledText charName;
     @FXML public UnderLabeledText playerName;
     @FXML public UnderLabeledText race;
     @FXML public UnderLabeledChoiceBox size;
     @FXML public UnderLabeledText alignment;
     @FXML public UnderLabeledText beliefs;
+
+    @FXML public ClassBox classOne;
+    @FXML public ClassBox classTwo;
+    @FXML public ClassBox classThree;
+    @FXML public ClassBox classFour;
+
+    @FXML public AppearanceBox appearance;
+    @FXML public SkillTable skills;
+    @FXML public Fatigue fatigue;
+    @FXML public Health health;
+    @FXML public StatusEffectTable status;
+
+
     public VitalsModel model;
 
 //    public VitalsModel model = new VitalsModel(this);
@@ -34,7 +43,6 @@ public class VitalsTab implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initLabels();
         this.newModel();
-//        CharacterSheet.REGISTRY.put(this.toString(), model);
     }
 
     private void initLabels() {

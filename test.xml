@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vitals>
+    <charName>Varis</charName>
+    <playerName>Caleb Hulbert</playerName>
+    <race>Half Elf</race>
+    <alignment>Chaotic Good</alignment>
+    <beliefs>Yes</beliefs>
+    <size>Medium</size>
+    <classOne>
+        <class>Pm</class>
+        <die>6</die>
+        <level>2</level>
+        <skill>6</skill>
+    </classOne>
+    <classTwo>
+        <class></class>
+        <die></die>
+        <level></level>
+        <skill></skill>
+    </classTwo>
+    <classThree>
+        <class></class>
+        <die></die>
+        <level></level>
+        <skill></skill>
+    </classThree>
+    <classFour>
+        <class></class>
+        <die></die>
+        <level></level>
+        <skill></skill>
+    </classFour>
+    <appearance>
+        <gender>Male</gender>
+        <age>420</age>
+        <height>5'10"</height>
+        <weight>155</weight>
+        <eyes>Blue</eyes>
+        <hair>Long, Straight, Blond</hair>
+        <skin>Fair</skin>
+        <demeanor>Calm, Collected, Neutral</demeanor>
+    </appearance>
+    <fatigue>
+        <current>10</current>
+        <level>12</level>
+        <con>-2</con>
+        <bonus></bonus>
+        <lost></lost>
+        <sub></sub>
+        <temp></temp>
+    </fatigue>
+    <health>
+        <current>10</current>
+        <level>10</level>
+        <con></con>
+        <bonus></bonus>
+        <lost></lost>
+        <sub></sub>
+        <temp></temp>
+        <thresh>4</thresh>
+        <hpPer>10</hpPer>
+    </health>
+    <skills>
+        <skill name="STR">
+            <score>0</score>
+            <mod>0</mod>
+            <base>12</base>
+            <bonus>0</bonus>
+            <temp>0</temp>
+            <other>0</other>
+        </skill>
+        <skill name="DEX">
+            <score>0</score>
+            <mod>0</mod>
+            <base>18</base>
+            <bonus>0</bonus>
+            <temp>0</temp>
+            <other>0</other>
+        </skill>
+        <skill name="CON">
+            <score>0</score>
+            <mod>0</mod>
+            <base>8</base>
+            <bonus>0</bonus>
+            <temp>0</temp>
+            <other>0</other>
+        </skill>
+        <skill name="INT">
+            <score>0</score>
+            <mod>0</mod>
+            <base>16</base>
+            <bonus>0</bonus>
+            <temp>0</temp>
+            <other>0</other>
+        </skill>
+        <skill name="WIS">
+            <score>0</score>
+            <mod>0</mod>
+            <base>10</base>
+            <bonus>0</bonus>
+            <temp>0</temp>
+            <other>0</other>
+        </skill>
+        <skill name="CHA">
+            <score>0</score>
+            <mod>0</mod>
+            <base>8</base>
+            <bonus>0</bonus>
+            <temp>0</temp>
+            <other>0</other>
+        </skill>
+    </skills>
+</vitals>

@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <FlowPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-          minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.spellswords.charactersheet.components.tabs.VitalsTab" vgap="5" hgap="20" >
+          minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.spellswords.charactersheet.components.tabs.VitalsTab" vgap="5" hgap="20">
     <padding>
         <Insets bottom="15.0" top="15.0" left="15.0" right="15.0"/>
     </padding>
@@ -40,52 +40,9 @@
             <ClassBox fx:id="classThree" classNum="3"/>
         </VBox>
     </HBox>
-    <AppearanceBox/>
-    <SkillTable/>
-    <Category text="Fatigue" styleClass="bordered">
-        <row>
-            <VBox spacing="5">
-                <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
-                    <UnderLabeledText text="Current"/>
-                    <UnderLabeledText text="Total" styleClass="unmodifiable"/>
-                    <UnderLabeledText text="Level"/>
-                    <UnderLabeledText text="Con"/>
-                    <UnderLabeledText text="Bonus"/>
-                </HBox>
-                <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
-                    <UnderLabeledText text="Lost"/>
-                    <UnderLabeledText text="Sub"/>
-                    <UnderLabeledText text="Temp"/>
-                </HBox>
-            </VBox>
-        </row>
-    </Category>
-    <HBox spacing="20" styleClass="bordered">
-        <Category text="Hit Points" >
-            <row>
-                <VBox spacing="5">
-                    <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
-                        <UnderLabeledText text="Current"/>
-                        <UnderLabeledText text="Total" styleClass="unmodifiable"/>
-                        <UnderLabeledText text="Level"/>
-                        <UnderLabeledText text="Con"/>
-                        <UnderLabeledText text="Bonus"/>
-                    </HBox>
-                    <HBox spacing="5" VBox.vgrow="NEVER" alignment="BASELINE_CENTER">
-                        <UnderLabeledText text="Lost"/>
-                        <UnderLabeledText text="Sub"/>
-                        <UnderLabeledText text="Temp"/>
-                    </HBox>
-                </VBox>
-            </row>
-        </Category>
-        <VBox>
-            <Label text="" VBox.vgrow="ALWAYS"/>
-            <HBox spacing="5">
-                <UnderLabeledText text="Thresh"/>
-                <UnderLabeledText text="HP Per"/>
-            </HBox>
-        </VBox>
-    </HBox>
-    <StatusEffectTable/>
+    <AppearanceBox fx:id="appearance"/>
+    <SkillTable fx:id="skills"/>
+    <Fatigue styleClass="bordered" fx:id="fatigue"/>
+    <Health fx:id="health" styleClass="bordered"/>
+    <StatusEffectTable fx:id="status"/>
 </FlowPane>

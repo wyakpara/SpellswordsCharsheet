@@ -29,6 +29,9 @@ module com.spellswords.charactersheet {
     exports com.spellswords.charactersheet.components.aggregate to
             javafx.fxml;
 
+    exports com.spellswords.charactersheet.utilities to
+            com.sun.xml.bind;
+
     opens com.spellswords.charactersheet to
             javafx.graphics,
             javafx.fxml;

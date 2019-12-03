@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
 <?import javafx.scene.layout.HBox?>
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox fx:id="nest"/>
         <Label fx:id="label" maxWidth="1.7976931348623157E308" alignment="CENTER"/>

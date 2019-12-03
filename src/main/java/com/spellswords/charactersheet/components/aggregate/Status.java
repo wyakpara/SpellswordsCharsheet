@@ -1,8 +1,6 @@
 package com.spellswords.charactersheet.components.aggregate;
 
-import com.spellswords.charactersheet.utilities.StringConverters;
 import javafx.beans.NamedArg;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

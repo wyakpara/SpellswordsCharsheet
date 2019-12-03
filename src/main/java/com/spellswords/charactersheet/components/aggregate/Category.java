@@ -24,7 +24,7 @@ public class Category extends VBox {
     @FXML private Label label;
 
     @FXML private HBox nest;
-    private ObservableList<Node> row = FXCollections.observableList(new ArrayList<>());
+    public ObservableList<Node> row = FXCollections.observableList(new ArrayList<>());
 
     public String gettext() {
         return text.get();
@@ -47,6 +47,9 @@ public class Category extends VBox {
 
     public Category(@NamedArg(value = "prefWidth", defaultValue = "-1") double prefWidth,
                     @NamedArg(value = "text", defaultValue = "default") String text) {
+
+
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Category.fxml"));
         loader.setRoot(this);
         loader.setController(this);

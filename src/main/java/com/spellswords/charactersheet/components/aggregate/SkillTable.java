@@ -10,20 +10,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SkillTable extends VBox {
 
     @FXML private Label label;
 
-    @FXML private HBox nest;
-    private ObservableList<Node> row = FXCollections.observableList(new ArrayList<>());
+    @FXML private VBox nest;
+    public ObservableList<Skill> skills = FXCollections.observableList(new ArrayList<>());
 
     public String gettext() {
         return text.get();
@@ -37,8 +38,8 @@ public class SkillTable extends VBox {
 
     public SimpleDoubleProperty prefWidth = new SimpleDoubleProperty();
 
-    public List<Node> getRow() {
-        return row;
+    public List<Skill> getSkills() {
+        return skills;
     }
 
 
@@ -62,7 +63,18 @@ public class SkillTable extends VBox {
 
     @FXML
     public void initialize() {
-//        if (this.getMinWidth() == -1) this.setMinComputedWidthByLabel();
+        nest.getChildren().stream().filter(Skill.class::isInstance).forEachOrdered(x -> skills.add((Skill) x));
+//        for (Node node : nest.getChildren()) {
+//            if (node instanceof Skill) {
+//                skills.add((Skill) node);
+//            }
+//        }
+        nest.getChildren().addListener((ListChangeListener<? super Node>) observable -> {
+            while (observable.next()) {
+                observable.getAddedSubList().stream().filter(Skill.class::isInstance).forEachOrdered(x -> skills.add((Skill) x));
+                observable.getRemoved().stream().filter(Skill.class::isInstance).forEachOrdered(skills::remove);
+            }
+        });
     }
 
     public void setMinComputedWidthByLabel() {

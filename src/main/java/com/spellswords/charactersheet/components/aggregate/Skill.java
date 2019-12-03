@@ -5,6 +5,7 @@ import javafx.beans.NamedArg;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,7 +39,7 @@ public class Skill extends HBox {
     @FXML public TextField other;
     private SimpleIntegerProperty otherProperty = new SimpleIntegerProperty();
 
-    private SimpleStringProperty skillProperty = new SimpleStringProperty();
+    public SimpleStringProperty skillProperty = new SimpleStringProperty();
 
     public Skill(@NamedArg(value = "skill", defaultValue = "N/A") String skill) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Skill.fxml"));
@@ -60,20 +61,21 @@ public class Skill extends HBox {
         temp.textProperty().bindBidirectional(tempProperty, StringConverters.StringIntConverter);
         other.textProperty().bindBidirectional(otherProperty, StringConverters.StringIntConverter);
 
-        scoreProperty.addListener(((observable, oldValue, newValue) -> {
-            modProperty.setValue(newValue.intValue() + 1);
-        }));
-        baseProperty.addListener(((observable, oldValue, newValue) -> {
-            int modValue = (newValue.intValue() - 10) / 2;
-            modProperty.setValue(modValue);
-        }));
-        bonusProperty.addListener(((observable, oldValue, newValue) -> {
-            tempProperty.setValue(newValue.intValue() + 1);
-        }));
-        tempProperty.addListener(((observable, oldValue, newValue) -> {
-            otherProperty.setValue(newValue.intValue() + 1);
-        }));
 
+        modProperty.addListener(this::updateScore);
+        scoreProperty.addListener(this::updateMod);;
+    }
+
+    private void updateScore(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+        if (oldVal != newVal) {
+            scoreProperty.set(baseProperty.get() + bonusProperty.get() + tempProperty.get() + otherProperty.get());
+        }
+    }
+
+    private void updateMod(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+        if (oldVal != newVal) {
+            modProperty.set((int) Math.floor(scoreProperty.get() - 10 /2));
+        }
     }
 
     @FXML
@@ -83,7 +85,6 @@ public class Skill extends HBox {
         base.setText("0");
         bonus.setText("0");
         temp.setText("0");
-        other.setText("0");
 
     }
 }

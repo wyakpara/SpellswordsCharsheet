@@ -2,7 +2,7 @@
 
 <?import com.spellswords.charactersheet.components.base.*?>
 <?import javafx.scene.layout.HBox?>
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" spacing="5">
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1" spacing="5">
     <HBox spacing="5">
         <UnderLabeledText fx:id="gender" text="Gender"/>
         <UnderLabeledText fx:id="age" text="Age"/>

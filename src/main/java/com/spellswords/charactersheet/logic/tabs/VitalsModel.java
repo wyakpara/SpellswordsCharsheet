@@ -1,13 +1,9 @@
 package com.spellswords.charactersheet.logic.tabs;
 
-import com.spellswords.charactersheet.components.aggregate.ClassBox;
 import com.spellswords.charactersheet.components.tabs.VitalsTab;
-import com.spellswords.charactersheet.logic.aggregate.ClassBoxModel;
-import javafx.beans.property.ObjectProperty;
+import com.spellswords.charactersheet.logic.aggregate.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.SingleSelectionModel;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -17,78 +13,28 @@ import javax.xml.bind.annotation.*;
 import java.io.*;
 
 @XmlRootElement(name = "vitals")
-@XmlType(propOrder={"charName", "playerName", "race", "alignment", "beliefs", "size", "classOne", "classTwo", "classThree", "classFour"})
-public class VitalsModel implements Serializable {
+@XmlType(propOrder = {"charName", "playerName", "race", "alignment", "beliefs",
+        "size", "classOne", "classTwo", "classThree", "classFour", "appearance",
+        "fatigue", "health", "skills"})
+public class VitalsModel implements JavaFxSerializable<VitalsModel, VitalsTab> {
 
-
-    @XmlElement()
-    public String getCharName() {
-        return charName.get();
-    }
-    public void setCharName(String charName) {
-        this.charName.set(charName);
-    }
-
-    @XmlElement()
-    public String getPlayerName() {
-        return playerName.get();
-    }
-    public void setPlayerName(String playerName) {
-        this.playerName.set(playerName);
-    }
-
-    @XmlElement()
-    public String getRace() {
-        return race.get();
-    }
-    public void setRace(String race) {
-        this.race.set(race);
-    }
-
-    @XmlElement()
-    public String getAlignment() {
-        return alignment.get();
-    }
-    public void setAlignment(String alignment) {
-        this.alignment.set(alignment);
-    }
-
-    @XmlElement()
-    public String getBeliefs() {
-        return beliefs.get();
-    }
-    public void setBeliefs(String beliefs) {
-        this.beliefs.set(beliefs);
-    }
-
-    @XmlElement()
-    public String getSize() {
-        return size.get();
-    }
-    public void setSize(String size) {
-        this.size.set(size);
-    }
-
-    @XmlElement()
     public ClassBoxModel classOne = new ClassBoxModel();
-    @XmlElement()
     public ClassBoxModel classTwo = new ClassBoxModel();
-    @XmlElement()
     public ClassBoxModel classThree = new ClassBoxModel();
-    @XmlElement()
     public ClassBoxModel classFour = new ClassBoxModel();
-    @XmlTransient
     public SimpleStringProperty charName = new SimpleStringProperty();
-    @XmlTransient
     public SimpleStringProperty playerName = new SimpleStringProperty();
-    @XmlTransient
     public SimpleStringProperty race = new SimpleStringProperty();
-    @XmlTransient
     public SimpleStringProperty size = new SimpleStringProperty();
-    @XmlTransient
     public SimpleStringProperty alignment = new SimpleStringProperty();
-    @XmlTransient
     public SimpleStringProperty beliefs = new SimpleStringProperty();
+
+    public AppearanceBoxModel appearance = new AppearanceBoxModel();
+
+    public SkillTableModel skills = new SkillTableModel();
+    public FatigueModel fatigue = new FatigueModel();
+    public HealthModel health = new HealthModel();
+    @XmlTransient public StatusEffectTableModel status = new StatusEffectTableModel();
 
     private VitalsTab tab;
 
@@ -113,6 +59,11 @@ public class VitalsModel implements Serializable {
         beliefs.bindBidirectional(vitalsTab.beliefs.input.textProperty());
 
         size.bindBidirectional(vitalsTab.size.choiceBox.valueProperty());
+
+        appearance.bind(vitalsTab.appearance);
+        fatigue.bind(vitalsTab.fatigue);
+        health.bind(vitalsTab.health);
+        skills.bind(vitalsTab.skills);
 
         tab = vitalsTab;
     }
@@ -159,7 +110,7 @@ public class VitalsModel implements Serializable {
         return model;
     }
 
-    private void copy(VitalsModel model) {
+    public void copy(VitalsModel model) {
         charName.set(model.charName.get());
         playerName.set(model.playerName.get());
         race.set(model.race.get());
@@ -170,6 +121,10 @@ public class VitalsModel implements Serializable {
         classTwo.copy(model.classTwo);
         classThree.copy(model.classThree);
         classFour.copy(model.classFour);
+        appearance.copy(model.appearance);
+        fatigue.copy(model.fatigue);
+        health.copy(model.health);
+        skills.copy(model.skills);
     }
 
     public void clearBindings() {
@@ -179,9 +134,13 @@ public class VitalsModel implements Serializable {
         size.unbindBidirectional(tab.size.choiceBox.valueProperty());
         alignment.unbindBidirectional(tab.alignment.input.textProperty());
         beliefs.unbindBidirectional(tab.beliefs.input.textProperty());
-        this.classOne.clearBindings();
-        this.classTwo.clearBindings();
-        this.classThree.clearBindings();
-        this.classFour.clearBindings();
+        classOne.clearBindings();
+        classTwo.clearBindings();
+        classThree.clearBindings();
+        classFour.clearBindings();
+        appearance.clearBindings();
+        fatigue.clearBindings();
+        health.clearBindings();
+        skills.clearBindings();
     }
 }

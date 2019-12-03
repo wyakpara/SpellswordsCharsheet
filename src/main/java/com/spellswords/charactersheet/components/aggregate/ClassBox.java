@@ -19,7 +19,6 @@ public class ClassBox extends HBox {
     @FXML public UnderLabeledChoiceBox die;
     @FXML public UnderLabeledText level;
     @FXML public UnderLabeledText skill;
-    @FXML public UnderLabeledChoiceBox bab;
 
     public ClassBox(@NamedArg(value = "classNum", defaultValue = "1") int classNum) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ClassBox.fxml"));

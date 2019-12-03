@@ -2,7 +2,7 @@
 
 <?import com.spellswords.charactersheet.components.base.UnderLabeledNode?>
 <?import com.spellswords.charactersheet.components.base.AutosizeTextField?>
-<fx:root type="UnderLabeledNode" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="UnderLabeledNode" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1">
     <over>
         <AutosizeTextField fx:id="input" maxWidth="1.7976931348623157E308"/>
     </over>
