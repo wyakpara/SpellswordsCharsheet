@@ -6,279 +6,167 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Level;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+//import
 
 /**
  *
  * @author Aric Hudson
  */
-public class Character {
- 
-    /*
-    * Constants
-    */
-    
-    private final int NUMCLASSES = 6;
-    
-    public static final String[] baseSkills = 
-    {"Acrobatics",
-    "Appraise",
-    "Art: Author",
-    "Art: Draw/Paint",
-    "Art: Musician",
-    "Athletics",
-    "Balance",
-    "Bluff",
-    "Concentrate",
-    "Cook",
-    "Cr: Alchemy",
-    "Cr: Blacksmith",
-    "Cr: Carpentry",
-    "Cr: Device",
-    "Cr: Masonry",
-    "Cr: Tan/Weave",
-    "Diplomacy",
-    "Disguise",
-    "Escape Artist",
-    "Handle Animal",
-    "Heal",
-    "Intimidate",
-    "Know: Anatomy",
-    "Know: Arcana",
-    "Know: Civic",
-    "Know: Engineer",
-    "Know: Geology",
-    "Know: Hist/Geog",
-    "Know: Logic",
-    "Know: Nature",
-    "Know: Phil/Rel",
-    "Martial Lore",
-    "Operator",
-    "Perception",
-    "Psicraft",
-    "Search",
-    "Sense Motive",
-    "Spellcraft",
-    "Stealth",
-    "Survival",
-    "Use Mystic Device",
-    "Use Rope"};
-    
-    /*
-    * Basic Vital information
-    */
-    String name, player, race, size, align, faith, bio, notes;
-    
-    /*
-    * Ability Score arrays
-    */
-    AbilityScore[] abilities; // Ability scores
-    
-    /*
-    * Leveling information
-    */
-    int level;
-    ArrayList<CharClass> classes;
-    
-    /*
-    * Armor information
-    */
-    ArmorClass ac;
-    
-    /*
-    * Proficiency Information
-    */
-    int proficiency;
-    
-    /*
-    * Armor Information
-    */
-    Armors armors;
-    
-    /*
-    * Weapon information
-    */
-    Weapons weapons;
-    
-    /*
-    * Inventory
-    */
-    Inventory inven;
-    
-    /*
-    * HP and Stamina information
-    */
-    Health health;
-    
-    /*
-    * Saves and Resistances information
-    */
-    Save fort, ref, will;
-    
-    String saveModifiers;
-    
-    int SR, PR, FR, CR, AR, ER, PosR, NegR;
-    
-    /*
-    * Skills Information
-    */
-    Skills skills;
-    
-    /*
-    * Actions information
-    */
-    Actions actions;
-    
-    /*
-    * Speeds information
-    */
-    Speeds speeds;
-    
-    /*
-    * Initiative information
-    */
-    Initiative initiative;
-    
-    /*
-    * List of Feats
-    */
-    Feats feats;
-    
-    public Character() {
-        // Blank constructor with everything initilized to zero/null
+public class Character implements Serializable {
+    public String charName;
+    private LevelRecord levels;
+    private SkillRecord skillRecord;
+    private AbilityCollection abilityCollection;
+
+    public Character(String charname, CharacterType primeType, CharacterType secondType) throws FileNotFoundException, IOException {
+        this.charName = charname;
+        levels = new LevelRecord(new CharClass("", primeType, secondType, 6, 1, 4));
+        abilityCollection = new AbilityCollection();
+        generateStandardAbilities();
+        skillRecord = new SkillRecord(abilityCollection, levels);
     }
-    
-    public void readJson() {
-//        JsonWriter jw = new JsonWriter();
+
+    public Character(String charname, String className, CharacterType primeType, CharacterType secondType) throws FileNotFoundException, IOException {
+        this.charName = charname;
+        levels = new LevelRecord(new CharClass(className, primeType, secondType, 6, 1, 4));
+        abilityCollection = new AbilityCollection();
+        generateStandardAbilities();
+        skillRecord = new SkillRecord(abilityCollection, levels);
     }
-    
-//    public void wtf() {//throws UnsupportedEncodingException {
-//        try{
-//            File newFile = new File("./text.txt");
-//            if(!newFile.exists())
-//            {
-//                newFile.createNewFile();
-//            }
-//                
-//            FileOutputStream out = new FileOutputStream(newFile);
-//            out.flush();
-////            JsonWriter writer = new JsonWriter(new OutputStreamWriter(System.out, "UTF-8"));
-//            JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-//            writer.beginArray();
-//            // Block for abilities array
-//            {
-//                writer.beginObject();
-//                writer.name("STR").value(""+abilities[0]);
-//                writer.name("DEX").value(""+abilities[1]);
-//                writer.name("CON").value(""+abilities[2]);
-//                writer.name("INT").value(""+abilities[3]);
-//                writer.name("WIS").value(""+abilities[4]);
-//                writer.name("CHA").value(""+abilities[5]);
-//                writer.endObject();
-//            }
-//            writer.endArray();
-//            writer.close();
-//            out.close();
-////        } catch (UnsupportedEncodingException | IOException f) {}
-//        } catch (IOException f) {System.err.println("IOException!!");}
+
+    public void generateStandardAbilities() {
+        AbilityScore str = new AbilityScore("STR", 10);
+        abilityCollection.add(str);
+        AbilityScore dex = new AbilityScore("DEX", 10);
+        abilityCollection.add(dex);
+        AbilityScore con = new AbilityScore("CON", 10);
+        abilityCollection.add(con);
+        AbilityScore ing = new AbilityScore("INT", 10);
+        abilityCollection.add(ing);
+        AbilityScore wis = new AbilityScore("WIS", 10);
+        abilityCollection.add(wis);
+        AbilityScore cha = new AbilityScore("CHA", 10);
+        abilityCollection.add(cha);
+    }
+
+    public static void saveCharacterXML(Character character) {
+        try {
+            File file = new File(character.charName + ".xml");
+            JAXBContext jaxbc= JAXBContext.newInstance(Character.class);
+            Marshaller jaxbcM = jaxbc.createMarshaller();
+
+            jaxbcM.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            jaxbcM.marshal(character, file);
+        } catch (JAXBException e) {
+            System.out.println("Error saving character!");
+        }
+    }
+
+//    public static void saveCharacterJson(Character character) {
+//        Gson();
 //    }
-    
-    /**
-     * Updates abilities
-     * 
-     * @param newAbils is an array of new abilities
-     */
-    public void updateAbils(int[] newAbils) {
-        for(int i = 0; i < 6; i++) {
-            abilities[i].setBaseScore(newAbils[i]);
-            abilities[i].update();
+
+    public static Character loadCharacterXML(String filename) {
+        try {
+            File file = new File("filename");
+            JAXBContext jaxbc = JAXBContext.newInstance(Character.class);
+
+            Unmarshaller jaxbcUm = jaxbc.createUnmarshaller();
+            Character character = (Character) jaxbcUm.unmarshal(file);
+
+            return character;
+        } catch (JAXBException e) {
+            System.out.println("Error loading character!");
+            return null;
         }
     }
-    
-    /**
-     * Updates ability bonuses
-     * 
-     * @param newBonus is an array of new abilities
-     */
-    public void updateAbilsBonus(int[] newBonus) {
-        for(int i = 0; i < 6; i++) {
-            abilities[i].setBonus(newBonus[i]);
-            abilities[i].update();
+
+    public static void saveCharacter(Character character) {
+        String filename = character.charName + ".ss";
+        try {
+            FileOutputStream f = new FileOutputStream(new File(filename));
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            // Write to file
+            o.writeObject(character);
+            o.close();
+            f.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
         }
     }
-    
-    /**
-     * Updates ability temps
-     * 
-     * @param newTemp is an array of new abilities
-     */
-    public void updateAbilsTemp(int[] newTemp) {
-        for(int i = 0; i < 6; i++) {
-            abilities[i].setTemp(newTemp[i]);
-            abilities[i].update();
+
+    public static Character loadCharacter(String filename) {
+        try {
+            FileInputStream f = new FileInputStream(new File(filename));
+            ObjectInputStream i = new ObjectInputStream(f);
+
+            // Read from file
+            Character character = (Character) i.readObject();
+            i.close();
+            f.close();
+            return character;
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
-    
-    /**
-     * Updates ability other
-     * 
-     * @param newOther is an array of new others
-     */
-    public void updateAbilsOther(int[] newOther) {
-        for(int i = 0; i < 6; i++) {
-            abilities[i].setOther(newOther[i]);
-            abilities[i].update();
-        }
+
+    public void updateAll() {
+        abilityCollection.updateAbilities();
+        skillRecord.updateSkills();
     }
-    
-    public void updateAbil(String abil, String kind, int newVal) {
-        int whichone;
-        String a = abil.toUpperCase();
-        if(a.equals("STR")) whichone = 0;
-        else if(a.equals("DEX")) whichone = 1;
-        else if(a.equals("CON")) whichone = 2;
-        else if(a.equals("INT")) whichone = 3;
-        else if(a.equals("WIS")) whichone = 4;
-        else if(a.equals("CHA")) whichone = 5;
-        else return;
-        
-        String k = kind.toUpperCase();
-        if(k.equals("BASE")) abilities[whichone].setBaseScore(newVal);
-        else if(k.equals("BONUS")) abilities[whichone].setBonus(newVal);
-        else if(k.equals("TEMP")) abilities[whichone].setTemp(newVal);
-        else if(k.equals("OTHER")) abilities[whichone].setOther(newVal);
+
+    public void addAbility(AbilityScore ability) {
+        abilityCollection.add(ability);
     }
-    
-    public int getAbil(String abil, String kind) {
-        int whichone;
-        String a = abil.toUpperCase();
-        if(a.equals("STR")) whichone = 0;
-        else if(a.equals("DEX")) whichone = 1;
-        else if(a.equals("CON")) whichone = 2;
-        else if(a.equals("INT")) whichone = 3;
-        else if(a.equals("WIS")) whichone = 4;
-        else if(a.equals("CHA")) whichone = 5;
-        else return 0;
-        
-        String k = kind.toUpperCase();
-        if(k.equals("BASE")) return abilities[whichone].getBaseScore();
-        else if(k.equals("MOD") || k.equals("MODIFIER")) return abilities[whichone].getMod();
-        else if(k.equals("BASE")) return abilities[whichone].getBaseScore();
-        else if(k.equals("BONUS")) return abilities[whichone].getBonus();
-        else if(k.equals("TEMP")) return abilities[whichone].getTemp();
-        else if(k.equals("OTHER")) return abilities[whichone].getOther();
-        else return abilities[whichone].getBaseScore();
+
+    public AbilityScore getAbility(String key) {
+        return abilityCollection.getAbility(key);
     }
-    
-    public int getStam() {
-        return health.getStam();
+
+    public Collection<AbilityScore> getAbilities() {
+        return abilityCollection.abilities.values();
     }
-    
-    public int getCurrentStam() {
-        return health.getCurrentStam();
+
+    public void addSkill(Skill skill) {
+        skillRecord.addSkill(skill);
     }
-    
-    public Speeds getSpeeds() {
-        return speeds;
+
+    public Skill getSkill(String key) {
+        return skillRecord.getSkill(key);
+    }
+
+    /************* TextAdventure Functions **********/
+    public String toString() {
+        String breakline = "-----------------------------------------\n";
+        StringBuilder charToString = new StringBuilder(breakline);
+        charToString.append("Name: " + charName + "\n");
+        charToString.append(levels.toString() + "\n");
+        charToString.append(breakline);
+        charToString.append("ABILITIES\n");
+        charToString.append(abilityCollection.toString() + "\n");
+        charToString.append(breakline);
+        charToString.append("SKILLS\n");
+        charToString.append(skillRecord.toString() + "\n");
+        return charToString.toString();
     }
 }

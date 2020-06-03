@@ -5,147 +5,146 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashMap;
+
 /**
  *
  * @author Didge
  */
-public class Skill {
-    private static int checkPen;
+public class Skill extends Rollable implements Serializable {
+
     private String name;
-    private String persuasion;
-    private int score;
-    private int progLevel;
-    private int base;
-    private int bonus;
-    private int temp;
+    private SkillType type;
+    private String abilityName;
+    private int finalBonus;
     private int take;
     private int min;
-    private int upkeep;
+    private int focus;
     private boolean checkApplies;
+    private HashMap<String, SubSkill> subSkills;
+
+    private static int checkPen;
     
-    public Skill() {
-        name = "";
-        persuasion = "";
-        score = base = bonus = temp = take = min = progLevel = 0;
-        checkApplies = false;
+    public Skill(String name, String ability, SkillType type, AbilityCollection abilities) {
+        initRollable();
+        this.name = name;
+        this.type = type;
+        subSkills = new HashMap<>();
+        setAbility(ability, abilities);
     }
-    
-    public Skill(String newName, String newPers, int newProgLevel) {
-        name = newName;
-        persuasion = newPers;
-        progLevel = newProgLevel;
+
+    public void updateAbility(AbilityCollection abilities) {
+        abilityBonus = abilities.getAbility(abilityName).getAbilityBonus();
+        update();
     }
-    
-    public static void setCheckPen(int newCheckPen) {
-        checkPen = newCheckPen;
+
+    public void setAbility(String ability, AbilityCollection abilities) {
+        abilityName = ability;
+        abilityBonus = abilities.getAbility(abilityName).getAbilityBonus();
+        update();
     }
-    
-    public static int getCheckPen() {
-        return checkPen;
+
+    public void addSubSkill(SubSkill subSkill) {
+        subSkills.put(subSkill.name, subSkill);
     }
-    
+
+    @Override
     public void update() {
-        score = base + bonus + temp;
-        if(checkApplies) score -= checkPen;
+        finalBonus = profBonus + focus + itemBonus + enhanceBonus + specBonus + tempBonus + abilityBonus;
+        if(checkApplies) finalBonus -= checkPen;
     }
-    
-    public void setBase(int proficiency) {
-        base = proficiency/3;
-        base *= progLevel;
-        update();
+
+    public int getTotalSkillPoints() {
+        int temp = getNumSkillPoints();
+        Collection<SubSkill> subs = subSkills.values();
+        for(SubSkill s:subs) {
+            if(s.isActive()) {
+                temp += s.getCost();
+            }
+        }
+
+        return temp + focus*2 + take + min*2;
     }
-    
-    public int getScore() {
-        return score;
-    }
-    
-    public int getBase() {
-        return base;
-    }
-    
-    public void setPersuasion(String newPers) {
-        persuasion = newPers;
-    }
-    
-    public String getPersuasion() {
-        return persuasion;
-    }
-    
-    public void setProgLevel(int newProg) {
-        progLevel = newProg;
-        update();
-    }
-    
-    public int getProgLevel() {
-        return progLevel;
-    }
-    
-    public void setName(String newName) {
-        name = newName;
-    }
-    
+
     public String getName() {
         return name;
     }
-    
-    public void setBonus(int newBonus) {
-        bonus = newBonus;
-        update();
+
+    public SkillType getType() {
+        return type;
     }
-    
-    public int getBonus() {
-        return bonus;
+
+    public void setName(String name) {
+        this.name = name;
     }
-    
-    public void setTemp(int newTemp) {
-        temp = newTemp;
-        update();
+
+    public void setType(SkillType type) {
+        this.type = type;
     }
-    
-    public int getTemp() {
-        return temp;
+
+    public String getAbilityName() {
+        return abilityName;
     }
-    
-    public void setMin(int newMin) {
-        min = newMin;
+
+    public void setAbilityName(String abilityName) {
+        this.abilityName = abilityName;
     }
-    
-    public int getMin() {
-        return min;
+
+    public int getFinalBonus() {
+        return finalBonus;
     }
-    
-    public void setTake(int newTake) {
-        take = newTake;
+
+    public void setFinalBonus(int finalBonus) {
+        this.finalBonus = finalBonus;
     }
-    
+
     public int getTake() {
         return take;
     }
-    
-    public void setUpkeep(int newUpkeep) {
-        upkeep = newUpkeep;
+
+    public void setTake(int take) {
+        this.take = take;
     }
-    
-    public int getUpkeep() {
-        return upkeep;
+
+    public int getMin() {
+        return min;
     }
-    
-    public void setCheck(boolean check) {
-        checkApplies = check;
+
+    public void setMin(int min) {
+        this.min = min;
     }
-    
-    public boolean penApplies() {
+
+    public int getFocus() {
+        return focus;
+    }
+
+    public void setFocus(int focus) {
+        this.focus = focus;
+    }
+
+    public boolean isCheckApplies() {
         return checkApplies;
     }
-    
-    public int getNumSkillPoints() {
-        int temp;
-        if(progLevel == 0) temp = 0;
-        else if(progLevel == 1) temp = 1;
-        else if(progLevel == 2) temp = 3;
-        else if(progLevel == 3) temp = 6;
-        else temp = 0;
-        
-        return temp + upkeep + take + min*2;
+
+    public void setCheckApplies(boolean checkApplies) {
+        this.checkApplies = checkApplies;
+    }
+
+    public HashMap<String, SubSkill> getSubSkills() {
+        return subSkills;
+    }
+
+    public void setSubSkills(HashMap<String, SubSkill> subSkills) {
+        this.subSkills = subSkills;
+    }
+
+    public static int getCheckPen() {
+        return checkPen;
+    }
+
+    public static void setCheckPen(int checkPen) {
+        Skill.checkPen = checkPen;
     }
 }

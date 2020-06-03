@@ -5,20 +5,21 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author Didge
  */
-public class Classes {
+public class Classes implements Serializable {
     HashMap<String, CharClass> classes;
     
     public Classes() {
         classes = new HashMap<>();
     }
     
-    public Classes(String[] names, String[] primaryTypes, String[] secondaryTypes, int[] HDs, int[] levels, int[] skills) {
+    public Classes(String[] names, CharacterType[] primaryTypes, CharacterType[] secondaryTypes, int[] HDs, int[] levels, int[] skills) {
         if(names.length != primaryTypes.length
             || names.length != secondaryTypes.length
             || names.length != HDs.length
@@ -31,7 +32,7 @@ public class Classes {
         }
     }
     
-    public void addClass(String name, String primaryType, String secondaryType, int HD, int level, int skill) {
+    public void addClass(String name, CharacterType primaryType, CharacterType secondaryType, int HD, int level, int skill) {
         classes.put(name, new CharClass(name, primaryType, secondaryType, HD, level, skill));
     }
     
@@ -59,12 +60,12 @@ public class Classes {
         classes.get(name).setName(newName);
     }
     
-    public void updateClassType(String name, String newType) {
-        classes.get(name).setType(1, newType);
+    public void updateClassType(String name, CharacterType newType) {
+        classes.get(name).setType(newType);
     }
     
-    public void updateClassSecondary(String name, String newType) {
-        classes.get(name).setType(0, newType);
+    public void updateClassSecondary(String name, CharacterType newType) {
+        classes.get(name).setType(newType);
     }
     
     public void updateClassHD(String name, int newHD) {

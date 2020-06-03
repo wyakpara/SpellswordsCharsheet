@@ -5,22 +5,22 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Didge
  */
-public class CharClass {
+public class CharClass implements Serializable {
     private String name;
-    private String type;
-    private String secondary;
+    private CharacterType type;
+    private CharacterType secondary;
     private int HD;
     private int level;
     private int skill;
     
     public CharClass() {
         name = "";
-        type = "";
-        secondary = "";
         HD = 0;
         level = 0;
         skill = 0;
@@ -29,20 +29,47 @@ public class CharClass {
     
     public CharClass(String newName) {
         name = newName;
-        type = "";
-        secondary = "";
         HD = 0;
         level = 0;
         skill = 0;
     }
     
-    public CharClass(String name, String primaryType, String secondaryType, int HD, int level, int skill) {
+    public CharClass(String name, CharacterType primaryType, CharacterType secondaryType, int HD, int level, int skill) {
         this.name = name;
         this.HD = HD;
         this.level = level;
         this.skill = skill;
         this.type = primaryType;
         this.secondary = secondaryType;
+    }
+
+    public String archetypeToString() {
+        StringBuilder arch = new StringBuilder();
+        switch (type) {
+            case MARTIAL:
+                arch.append("M");
+                break;
+            case SPECIALIST:
+                arch.append("S");
+                break;
+            case PSIONIC:
+                arch.append("P");
+                break;
+        }
+
+        switch (secondary) {
+            case MARTIAL:
+                arch.append("m");
+                break;
+            case SPECIALIST:
+                arch.append("s");
+                break;
+            case PSIONIC:
+                arch.append("p");
+                break;
+        }
+
+        return arch.toString();
     }
     
     public String getName() {
@@ -81,36 +108,23 @@ public class CharClass {
         skill = newSkill;
     }
     
-    public String getType(int which) {
-        if(which == 1)
-        {
-            return type;
-        }
-        else
-        {
-            return secondary;
-        }
+    public CharacterType getType() {
+        return type;
+    }
+
+    public CharacterType getSecondary() {
+        return secondary;
     }
     
-    public void setType(int which, String newType) {
-        if(which == 1)
-        {
-            type = newType;
-        }
-        else
-        {
-            secondary = newType;
-        }
+    public void setType(CharacterType newType) {
+        type = newType;
     }
-    
-//    public void writeToJson(JsonWriter writer) throws IOException {
-//        writer.beginObject();
-//        writer.name("name").value(name);
-//        writer.name("type").value(type);
-//        writer.name("secondary").value(secondary);
-//        writer.name("level").value(level);
-//        writer.name("skill").value(skill);
-//        writer.name("HD").value(HD);
-//        writer.endObject();
-//    }
+
+    public void setSecondary(CharacterType newType) {
+        secondary = newType;
+    }
+
+    public int calculateSkillPoints() {
+        return skill * level;
+    }
 }

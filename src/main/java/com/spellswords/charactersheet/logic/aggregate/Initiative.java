@@ -22,7 +22,7 @@ public class Initiative {
         update();
     }
     
-    public void setDex(AbilityScore dex) {
+    public void setDex(com.spellswords.charactersheet.logic.aggregate.AbilityScore dex) {
         dexInit = dex.getMod();
         update();
     }

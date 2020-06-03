@@ -5,87 +5,68 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Didge
  */
-public class AbilityScore {
+public class AbilityScore extends Rollable implements Serializable {
+
+    public String name;
+
     private int finalScore;
-    private int modifier;
+
     private int baseScore;
-    private int bonus;
-    private int temp;
-    private int other;
     
-    public AbilityScore(int[] numbers) {
-        if(numbers.length != 4)
-        {
-            System.err.println("Ability Error");
-        }
-        else
-        {
-            baseScore = numbers[0];
-            bonus = numbers[1];
-            temp = numbers[2];
-            other = numbers[3];
-            update();
-        }
-    }
-    
-    public AbilityScore(int base) {
-        baseScore = base;
-        bonus = 0;
-        temp = 0;
-        other = 0;
+    public AbilityScore(String name, int baseScore) {
+        this.name = name;
+        finalScore = this.baseScore = baseScore;
+        initRollable();
         update();
     }
-    
+
+    @Override
     public void update() {
-        finalScore = baseScore + bonus + temp + other;
-        modifier = (finalScore - 10)/2;
+        finalScore = baseScore+itemBonus+enhanceBonus+specBonus+tempBonus;
+        abilityBonus = (finalScore - 10)/2;
     }
-    
-    public int getFinalScore() {
-        return finalScore;
+
+    public int getMod() {
+        return abilityBonus;
     }
-    
+
+    @Override
+    public int roll() {
+        int total = abilityBonus + profBonus;
+        return dice.rollDice(total);
+    }
+
     public int getBaseScore() {
         return baseScore;
     }
-    
+
     public void setBaseScore(int baseScore) {
         this.baseScore = baseScore;
         update();
     }
-    
-    public int getBonus() {
-        return bonus;
+
+    public int getFinalScore() {
+        return finalScore;
+    } public String getName() {
+        return name;
     }
-    
-    public void setBonus(int baseScore) {
-        this.bonus = baseScore;
-        update();
+
+    public void setName(String name) {
+        this.name = name;
     }
-    
-    public int getTemp() {
-        return temp;
+
+    public String toFullString() {
+        StringBuilder abStr = new StringBuilder("Name\tFinal\tMod\tBase\tItem\tEnhance\tSpec\tTemp\t");
+        abStr.append(name + "\t\t" + finalScore + "\t" + abilityBonus + "\t");
+        abStr.append(" | " + itemBonus + "\t" + enhanceBonus + "\t" + specBonus + "\t" + tempBonus);
+        return abStr.toString();
     }
-    
-    public void setTemp(int baseScore) {
-        this.temp = baseScore;
-        update();
-    }
-    
-    public int getOther() {
-        return other;
-    }
-    
-    public void setOther(int baseScore) {
-        this.other = baseScore;
-        update();
-    }
-    
-    public int getMod() {
-        return modifier;
-    }
+
+
 }

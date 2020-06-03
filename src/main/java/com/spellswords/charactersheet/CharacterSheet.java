@@ -6,6 +6,7 @@
 package com.spellswords.charactersheet;
 
 import com.spellswords.charactersheet.components.tabs.VitalsTab;
+import com.spellswords.charactersheet.logic.aggregate.SpellswordsCharSheetTextAdventure;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -56,8 +57,15 @@ public class CharacterSheet extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
-    }
-
-
+        for(String s:args) {
+            if (s.equals("-t")) {
+                System.out.println("Running Text Adventure Character Sheet...");
+                SpellswordsCharSheetTextAdventure textAdventure = new SpellswordsCharSheetTextAdventure();
+                textAdventure.mainMenu();
+                return;
+            }
+        }
+        System.out.println("JavaFX character sheet not supported");
+//        launch(args);
+        }
 }

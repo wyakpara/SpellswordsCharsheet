@@ -1,0 +1,62 @@
+// Skill,Name,Ability,Type,Check
+// SubSkill,Name,Cost
+Skill,Acrobatics,DEX,BODY,TRUE
+SubSkill,Tumbler,3
+SubSkill,Dancer,3
+Skill,Athletics,STR,BODY,FALSE
+SubSkill,Climbing,3
+SubSkill,Swimming,3
+Skill,Stealth,DEX,BODY,FALSE
+Skill,Brewing,INT,FLEX
+SubSkill,Alchemy,3
+SubSkill,Distilling,3
+Skill,Focus,CON,FLEX
+Skill,Forging,INT,FLEX
+SubSkill,Smithing,3
+SubSkill,Carpentry,3
+Skill,Handle Animal,WIS,FLEX
+Skill,Martial Lore,INT,FLEX
+Skill,MeCHAnics,INT,FLEX
+SubSkill,Device,3
+SubSkill,Sabotage,3
+Skill,Operation,WIS,FLEX,TRUE
+SubSkill,Sailing,3
+Skill,Perception,WIS,FLEX
+Skill,Survival,WIS,FLEX
+SubSkill,Navigation,3
+Skill,Trickery,CHA,FLEX
+SubSkill,Sleight of Hand,3
+SubSkill,Disguise,3
+SubSkill,Weaving,3
+Skill,Anatomy,INT,MIND
+SubSkill,Tanning/Taxidermy,3
+Skill,Arcana,INT,MIND
+SubSkill,Trivia,3
+Skill,Architecture,INT,MIND
+SubSkill,Masonry,3
+Skill,Art,CHA,MIND
+SubSkill,Author,3
+SubSkill,Painter,3
+SubSkill,Musician,3
+SubSkill,Sculptor,3
+Skill,Business,INT,MIND
+Skill,Civics,INT,MIND
+SubSkill,Law,3
+SubSkill,History,3
+Skill,Diplomacy,CHA,MIND
+SubSkill,Teaching,3
+Skill,Instinct,WIS,MIND
+Skill,Intimidation,CHA,MIND
+Skill,Investigate,INT,MIND
+SubSkill,Gather Information,3
+Skill,Logic,INT,MIND
+SubSkill,Riddles,3
+Skill,Medicine,INT,MIND
+SubSkill,Psychiatry,3
+Skill,Nature,INT,MIND
+SubSkill,Geology,3
+SubSkill,Herbology,3
+Skill,Philosophy,INT,MIND
+SubSkill,Religion,3
+Skill,Psicraft,INT,MIND
+Skill,Spellcraft,INT,MIND

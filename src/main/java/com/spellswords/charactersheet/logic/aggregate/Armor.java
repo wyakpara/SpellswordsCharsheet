@@ -11,10 +11,17 @@ import java.util.ArrayList;
  * @author Didge
  */
 public class Armor {
+
+    private enum armorType {
+        UNIVERSAL,
+        DEFLECTION,
+        AVOIDANCE
+    }
+
     private int number;
     private String name;
     private String kind;
-    private String type;
+    private armorType type;
     private int ac;
     int charToAc;
     private int baseAc;
@@ -30,7 +37,7 @@ public class Armor {
     private int check;
     private int critAc;
     private int maxDex;
-    private int weight;
+    private int encumbrance;
     
     private boolean worn;
     
@@ -39,18 +46,18 @@ public class Armor {
         qualities = new ArrayList<>();
         name = "";
         kind = "";
-        type = "";
+        type = armorType.UNIVERSAL;
         
         ac = charToAc = baseAc = enhanceAc = tempAc = 0;
         
         dr = charToDr = baseDr = enhanceDr = tempDr = 0;
         
-        check = critAc = maxDex = weight = 0;
+        check = critAc = maxDex = encumbrance = 0;
         
         worn = false;
     }
     
-    public Armor(int num, String n, String k, String t, int chtac, int bac, int eac, int tac, int chtd, int bdr, int edr, int tdr, int chek, int mdex, int w) {
+    public Armor(int num, String n, String k, armorType t, int chtac, int bac, int eac, int tac, int chtd, int bdr, int edr, int tdr, int chek, int mdex, int w) {
         number = num;
         qualities = new ArrayList<>();
         name = n;
@@ -69,7 +76,7 @@ public class Armor {
         
         check = chek;
         maxDex = mdex;
-        weight = w;
+        encumbrance = w;
         
         critAc = 0;
         worn = false;
@@ -129,14 +136,14 @@ public class Armor {
     /**
      * @return the type
      */
-    public String getType() {
+    public armorType getType() {
         return type;
     }
 
     /**
      * @param type the type to set
      */
-    public void setType(String type) {
+    public void setType(armorType type) {
         this.type = type;
     }
 
@@ -320,15 +327,15 @@ public class Armor {
     /**
      * @return the weight
      */
-    public int getWeight() {
-        return weight;
+    public int getEncumbrance() {
+        return encumbrance;
     }
 
     /**
-     * @param weight the weight to set
+     * @param encumbrance the weight to set
      */
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setEncumbrance(int encumbrance) {
+        this.encumbrance = encumbrance;
     }
 
     /**
