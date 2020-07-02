@@ -5,25 +5,40 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import com.spellswords.charactersheet.utilities.Columns;
+
 import java.io.Serializable;
 
 /**
  *
  * @author Didge
  */
-public class AbilityScore extends Rollable implements Serializable {
+public class AbilityScore extends Rollable implements Comparable<AbilityScore> {
 
     public String name;
 
     private int finalScore;
 
     private int baseScore;
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    private int index;
+
+    AbilityScore () {}
     
     public AbilityScore(String name, int baseScore) {
         this.name = name;
         finalScore = this.baseScore = baseScore;
         initRollable();
         update();
+    }
+
+    @Override
+    public int compareTo(AbilityScore abil) {
+        return Integer.compare(index, abil.index);
     }
 
     @Override
@@ -51,6 +66,10 @@ public class AbilityScore extends Rollable implements Serializable {
         update();
     }
 
+    public int getSave() {
+        return getMod() + getProfBonus();
+    }
+
     public int getFinalScore() {
         return finalScore;
     } public String getName() {
@@ -61,11 +80,32 @@ public class AbilityScore extends Rollable implements Serializable {
         this.name = name;
     }
 
+    /**** Textedit Functions ****/
+    public String toPartialString() {
+        Columns column = getPartialAbilHeader();
+        return addPartialToColumn(column).toString();
+    }
+
+    public static Columns getPartialAbilHeader() {
+        return new Columns().addLine("Name", "Score", "Mod", "Save");
+    }
+
+    public Columns addPartialToColumn(Columns column) {
+        return column.addLine(name, "" + finalScore, "" + abilityBonus, "" + getSave());
+    }
+
     public String toFullString() {
-        StringBuilder abStr = new StringBuilder("Name\tFinal\tMod\tBase\tItem\tEnhance\tSpec\tTemp\t");
-        abStr.append(name + "\t\t" + finalScore + "\t" + abilityBonus + "\t");
-        abStr.append(" | " + itemBonus + "\t" + enhanceBonus + "\t" + specBonus + "\t" + tempBonus);
-        return abStr.toString();
+        Columns column = getFullAbilHeader();
+        return addAllToColumn(column).toString();
+    }
+
+    public static Columns getFullAbilHeader() {
+        return new Columns().addLine("Name", "Final", "Mod", "Save", "|", "Base", "Item", "Enhance", "Spec", "Temp");
+    }
+
+    public Columns addAllToColumn(Columns column) {
+        return column.addLine(name, "" + finalScore, "" + abilityBonus, "" + getSave(), "|", "" + baseScore,
+                "" + itemBonus, "" + enhanceBonus, "" + specBonus, "" + tempBonus);
     }
 
 

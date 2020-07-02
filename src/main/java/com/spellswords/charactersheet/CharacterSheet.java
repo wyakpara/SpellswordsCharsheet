@@ -5,7 +5,7 @@
  */
 package com.spellswords.charactersheet;
 
-import com.spellswords.charactersheet.components.tabs.VitalsTab;
+//import com.spellswords.charactersheet.components.tabs.VitalsTab;
 import com.spellswords.charactersheet.logic.aggregate.SpellswordsCharSheetTextAdventure;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -21,51 +21,58 @@ import java.util.Map;
 /**
  * @author Didge
  */
-public class CharacterSheet extends Application {
+public class CharacterSheet /*extends Application*/ {
 
-    private FxmlControl<App, VBox> app;
-    private static String TAB = "Tab.fxml";
-    private static String APP = "App.fxml";
-
-    public static Map<String, Object> REGISTRY = new HashMap<>();
-
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-
-        app = new FxmlControl<App, VBox>(APP);
-        App contr = app.controller;
-        for (TabInfo<?, ? extends Node> tabInfo : TabInfo.tabs) {
-            var tab = new FxmlControl<CharacterTab, Tab>(TAB);
-            tab.root.setText(tabInfo.name);
-
-            contr.addTab(tab);
-            tab.root.setContent(tabInfo.control.root);
-        }
-
-        VBox root = app.getRoot();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("App.css").toExternalForm());
-
-        primaryStage.setTitle("Versebender!");
-        primaryStage.setHeight(900);
-        primaryStage.setWidth(1050);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+//    private FxmlControl<App, VBox> app;
+//    private static String TAB = "Tab.fxml";
+//    private static String APP = "App.fxml";
+//
+//    public static Map<String, Object> REGISTRY = new HashMap<>();
+//
+//    @Override
+//    public void start(Stage primaryStage) throws IOException {
+//
+//        app = new FxmlControl<App, VBox>(APP);
+//        App contr = app.controller;
+//        for (TabInfo<?, ? extends Node> tabInfo : TabInfo.tabs) {
+//            var tab = new FxmlControl<CharacterTab, Tab>(TAB);
+//            tab.root.setText(tabInfo.name);
+//
+//            contr.addTab(tab);
+//            tab.root.setContent(tabInfo.control.root);
+//        }
+//
+//        VBox root = app.getRoot();
+//        Scene scene = new Scene(root);
+//        scene.getStylesheets().add(getClass().getResource("App.css").toExternalForm());
+//
+//        primaryStage.setTitle("Versebender!");
+//        primaryStage.setHeight(900);
+//        primaryStage.setWidth(1050);
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        for(String s:args) {
+
+        boolean textEdit = false;
+        for (String s : args) {
+            //System.out.println("Arg: " + s);
             if (s.equals("-t")) {
                 System.out.println("Running Text Adventure Character Sheet...");
-                SpellswordsCharSheetTextAdventure textAdventure = new SpellswordsCharSheetTextAdventure();
-                textAdventure.mainMenu();
-                return;
+                textEdit = true;
+                break;
             }
         }
-        System.out.println("JavaFX character sheet not supported");
-//        launch(args);
+        if (textEdit) {
+            SpellswordsCharSheetTextAdventure textAdventure = new SpellswordsCharSheetTextAdventure();
+            textAdventure.mainMenu();
+        } else {
+            System.out.println("JavaFX character sheet not supported");
+//            launch(args);
         }
+    }
 }

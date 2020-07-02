@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class LevelRecord implements Serializable {
-    private HashMap<String, CharClass> charClasses;
+    protected HashMap<String, CharClass> charClasses;
+
+    public LevelRecord() {}
 
     public LevelRecord(CharClass firstClass) {
         charClasses = new HashMap<>();
@@ -41,6 +43,10 @@ public class LevelRecord implements Serializable {
         return skillpoints;
     }
 
+    public Collection<CharClass> getCollection() {
+        return charClasses.values();
+    }
+
     /************* TextAdventure Functions **********/
     public String toString() {
         StringBuilder levelStr = new StringBuilder("Level: " + getLevel() + "\n");
@@ -50,6 +56,8 @@ public class LevelRecord implements Serializable {
         for(CharClass cc:ccs) {
             levelStr.append("Class " + i + ": ");
             levelStr.append(cc.getName() + " (" + cc.archetypeToString() + ") " + cc.getLevel() + "\n");
+            levelStr.append("Hit Die: " + cc.getHD() + "\n");
+            levelStr.append("Skills Per Level: " + cc.getSkill() + "\n");
         }
         return levelStr.toString();
     }

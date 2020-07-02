@@ -13,19 +13,13 @@ import java.io.Serializable;
  */
 public class CharClass implements Serializable {
     private String name;
-    private CharacterType type;
-    private CharacterType secondary;
+    private ArchetypeType type;
+    private ArchetypeType secondary;
     private int HD;
     private int level;
     private int skill;
     
-    public CharClass() {
-        name = "";
-        HD = 0;
-        level = 0;
-        skill = 0;
-        
-    }
+    public CharClass() {}
     
     public CharClass(String newName) {
         name = newName;
@@ -34,7 +28,7 @@ public class CharClass implements Serializable {
         skill = 0;
     }
     
-    public CharClass(String name, CharacterType primaryType, CharacterType secondaryType, int HD, int level, int skill) {
+    public CharClass(String name, ArchetypeType primaryType, ArchetypeType secondaryType, int HD, int level, int skill) {
         this.name = name;
         this.HD = HD;
         this.level = level;
@@ -55,6 +49,12 @@ public class CharClass implements Serializable {
             case PSIONIC:
                 arch.append("P");
                 break;
+            case ARCANE:
+                arch.append("A");
+                break;
+            case DIVINE:
+                arch.append("D");
+                break;
         }
 
         switch (secondary) {
@@ -67,9 +67,19 @@ public class CharClass implements Serializable {
             case PSIONIC:
                 arch.append("p");
                 break;
+            case ARCANE:
+                arch.append("a");
+                break;
+            case DIVINE:
+                arch.append("d");
+                break;
         }
 
         return arch.toString();
+    }
+
+    public String toString() {
+        return name + " (" + archetypeToString() + ") Level " + level;
     }
     
     public String getName() {
@@ -108,19 +118,19 @@ public class CharClass implements Serializable {
         skill = newSkill;
     }
     
-    public CharacterType getType() {
+    public ArchetypeType getType() {
         return type;
     }
 
-    public CharacterType getSecondary() {
+    public ArchetypeType getSecondary() {
         return secondary;
     }
     
-    public void setType(CharacterType newType) {
+    public void setType(ArchetypeType newType) {
         type = newType;
     }
 
-    public void setSecondary(CharacterType newType) {
+    public void setSecondary(ArchetypeType newType) {
         secondary = newType;
     }
 

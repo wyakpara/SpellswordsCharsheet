@@ -6,15 +6,12 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import com.google.gson.Gson;
+
 import java.io.*;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
-import java.util.logging.Level;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-//import
 
 /**
  *
@@ -25,8 +22,11 @@ public class Character implements Serializable {
     private LevelRecord levels;
     private SkillRecord skillRecord;
     private AbilityCollection abilityCollection;
+    private FeatRecord featRecord;
 
-    public Character(String charname, CharacterType primeType, CharacterType secondType) throws FileNotFoundException, IOException {
+    public Character () {}
+
+    public Character(String charname, ArchetypeType primeType, ArchetypeType secondType) throws FileNotFoundException, IOException {
         this.charName = charname;
         levels = new LevelRecord(new CharClass("", primeType, secondType, 6, 1, 4));
         abilityCollection = new AbilityCollection();
@@ -34,7 +34,7 @@ public class Character implements Serializable {
         skillRecord = new SkillRecord(abilityCollection, levels);
     }
 
-    public Character(String charname, String className, CharacterType primeType, CharacterType secondType) throws FileNotFoundException, IOException {
+    public Character(String charname, String className, ArchetypeType primeType, ArchetypeType secondType) throws FileNotFoundException, IOException {
         this.charName = charname;
         levels = new LevelRecord(new CharClass(className, primeType, secondType, 6, 1, 4));
         abilityCollection = new AbilityCollection();
@@ -42,52 +42,63 @@ public class Character implements Serializable {
         skillRecord = new SkillRecord(abilityCollection, levels);
     }
 
+    public Character (String charName, CharClass firstClass) throws IOException {
+        this.charName = charName;
+        levels = new LevelRecord(firstClass);
+        abilityCollection = new AbilityCollection();
+        generateStandardAbilities();
+        skillRecord = new SkillRecord(abilityCollection, levels);
+        featRecord = new FeatRecord();
+    }
+
     public void generateStandardAbilities() {
         AbilityScore str = new AbilityScore("STR", 10);
+        str.setIndex(0);
         abilityCollection.add(str);
         AbilityScore dex = new AbilityScore("DEX", 10);
+        dex.setIndex(1);
         abilityCollection.add(dex);
         AbilityScore con = new AbilityScore("CON", 10);
+        con.setIndex(2);
         abilityCollection.add(con);
         AbilityScore ing = new AbilityScore("INT", 10);
+        ing.setIndex(3);
         abilityCollection.add(ing);
         AbilityScore wis = new AbilityScore("WIS", 10);
+        wis.setIndex(4);
         abilityCollection.add(wis);
         AbilityScore cha = new AbilityScore("CHA", 10);
+        cha.setIndex(5);
         abilityCollection.add(cha);
     }
 
-    public static void saveCharacterXML(Character character) {
+    public static void saveCharacterJson(Character character) {
+        Gson gson = new Gson();
+        String json = gson.toJson(character);
+//        System.out.println(json);
         try {
-            File file = new File(character.charName + ".xml");
-            JAXBContext jaxbc= JAXBContext.newInstance(Character.class);
-            Marshaller jaxbcM = jaxbc.createMarshaller();
-
-            jaxbcM.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            jaxbcM.marshal(character, file);
-        } catch (JAXBException e) {
-            System.out.println("Error saving character!");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(character.charName + ".json"));
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error saving character");
         }
     }
 
-//    public static void saveCharacterJson(Character character) {
-//        Gson();
-//    }
-
-    public static Character loadCharacterXML(String filename) {
+    public static Character loadCharacterJson(String filename) {
+        Gson gson = new Gson();
+        String json = "";
         try {
-            File file = new File("filename");
-            JAXBContext jaxbc = JAXBContext.newInstance(Character.class);
-
-            Unmarshaller jaxbcUm = jaxbc.createUnmarshaller();
-            Character character = (Character) jaxbcUm.unmarshal(file);
-
-            return character;
-        } catch (JAXBException e) {
-            System.out.println("Error loading character!");
+            json = new String(Files.readAllBytes(Paths.get(filename)));
+        } catch (IOException e) {
+            System.out.println("Unable to read file");
             return null;
         }
+
+//        System.out.println("Character:\n" + json);
+        Character character = gson.fromJson(json, Character.class);
+        character.updateAll();
+        return character;
     }
 
     public static void saveCharacter(Character character) {
@@ -117,6 +128,8 @@ public class Character implements Serializable {
             Character character = (Character) i.readObject();
             i.close();
             f.close();
+
+            character.updateAll();
             return character;
 
         } catch (FileNotFoundException e) {
@@ -130,9 +143,15 @@ public class Character implements Serializable {
         return null;
     }
 
+    public void changeSkillProficiency(String skillname, int newProf) {
+        skillRecord.setSkillProf(skillname, newProf);
+        updateAll();
+    }
+
     public void updateAll() {
+        Proficiency.setLevel(levels.getLevel());
         abilityCollection.updateAbilities();
-        skillRecord.updateSkills();
+        skillRecord.updateSkills(abilityCollection, levels);
     }
 
     public void addAbility(AbilityScore ability) {
@@ -143,8 +162,20 @@ public class Character implements Serializable {
         return abilityCollection.getAbility(key);
     }
 
+    public void spendSkillPoints(SkillType type, int pointsSpent) {
+        skillRecord.spendSkillPoints(type, pointsSpent);
+    }
+
+    public boolean hasPseudoSkills() {
+        return skillRecord.hasPseudoSkills();
+    }
+
     public Collection<AbilityScore> getAbilities() {
         return abilityCollection.abilities.values();
+    }
+
+    public Collection<CharClass> getClasses() {
+        return levels.charClasses.values();
     }
 
     public void addSkill(Skill skill) {
@@ -155,18 +186,44 @@ public class Character implements Serializable {
         return skillRecord.getSkill(key);
     }
 
+    public void addPseudoSkill(PseudoSkill ps) {
+        skillRecord.addPseudoSkill(ps);
+    }
+
+    public PseudoSkill getPseudoSkill(String key) {
+        return skillRecord.getPseudoSkill(key);
+    }
+
+    public void removePseudoSkill(PseudoSkill ps) {
+        skillRecord.removePseudoSkill(ps);
+    }
+
+    FeatRecord getFeatRecord() {
+        return featRecord;
+    }
+
     /************* TextAdventure Functions **********/
     public String toString() {
         String breakline = "-----------------------------------------\n";
         StringBuilder charToString = new StringBuilder(breakline);
         charToString.append("Name: " + charName + "\n");
-        charToString.append(levels.toString() + "\n");
+        charToString.append(levels.toString());
         charToString.append(breakline);
         charToString.append("ABILITIES\n");
-        charToString.append(abilityCollection.toString() + "\n");
+        charToString.append(abilityCollection.toString());
+        charToString.append(breakline);
+        charToString.append("SKILL POINTS\n");
+        charToString.append(skillRecord.skillPointsToString());
         charToString.append(breakline);
         charToString.append("SKILLS\n");
-        charToString.append(skillRecord.toString() + "\n");
+        charToString.append(skillRecord.skillsToString());
+        charToString.append(breakline);
+        charToString.append("PSEUDO SKILLS\n");
+        charToString.append(skillRecord.pseudoSkillsToString());
+        charToString.append(breakline);
+        charToString.append("FEATS");
+        charToString.append(featRecord.featResourcesToString());
+        charToString.append(featRecord.featTreesToString());
         return charToString.toString();
     }
 }

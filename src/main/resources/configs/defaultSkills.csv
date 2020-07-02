@@ -7,8 +7,7 @@ Skill,Athletics,STR,BODY,FALSE
 SubSkill,Climbing,3
 SubSkill,Swimming,3
 Skill,Stealth,DEX,BODY,FALSE
-Skill,Brewing,INT,FLEX
-SubSkill,Alchemy,3
+Skill,Cuisine,INT,FLEX
 SubSkill,Distilling,3
 Skill,Focus,CON,FLEX
 Skill,Forging,INT,FLEX
@@ -16,7 +15,7 @@ SubSkill,Smithing,3
 SubSkill,Carpentry,3
 Skill,Handle Animal,WIS,FLEX
 Skill,Martial Lore,INT,FLEX
-Skill,MeCHAnics,INT,FLEX
+Skill,Mechanics,INT,FLEX
 SubSkill,Device,3
 SubSkill,Sabotage,3
 Skill,Operation,WIS,FLEX,TRUE
@@ -31,6 +30,8 @@ SubSkill,Weaving,3
 Skill,Anatomy,INT,MIND
 SubSkill,Tanning/Taxidermy,3
 Skill,Arcana,INT,MIND
+SubSkill,Forbidden
+SubSkill,Alchemy,3
 SubSkill,Trivia,3
 Skill,Architecture,INT,MIND
 SubSkill,Masonry,3

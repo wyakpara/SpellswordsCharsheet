@@ -33,6 +33,8 @@ public abstract class Proficiency {
 
     public void setProfLevel(int profLevel) {
         this.profLevel = profLevel;
+        update();
+        profBonus = calculateProfBonus(level, profLevel);
     }
 
     public int getProfBonus() {

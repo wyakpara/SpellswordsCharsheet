@@ -5,7 +5,8 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
-import java.io.Serializable;
+import com.spellswords.charactersheet.utilities.Columns;
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ import java.util.HashMap;
  *
  * @author Didge
  */
-public class Skill extends Rollable implements Serializable {
+public class Skill extends Rollable implements Comparable<Skill> {
 
     private String name;
     private SkillType type;
@@ -26,6 +27,8 @@ public class Skill extends Rollable implements Serializable {
     private HashMap<String, SubSkill> subSkills;
 
     private static int checkPen;
+
+    Skill() {}
     
     public Skill(String name, String ability, SkillType type, AbilityCollection abilities) {
         initRollable();
@@ -52,6 +55,7 @@ public class Skill extends Rollable implements Serializable {
 
     @Override
     public void update() {
+        profBonus = calculateProfBonus(Proficiency.level, profLevel);
         finalBonus = profBonus + focus + itemBonus + enhanceBonus + specBonus + tempBonus + abilityBonus;
         if(checkApplies) finalBonus -= checkPen;
     }
@@ -66,6 +70,14 @@ public class Skill extends Rollable implements Serializable {
         }
 
         return temp + focus*2 + take + min*2;
+    }
+
+    public int compareTo(final Skill compare) {
+        return this.name.compareTo(compare.name);
+    }
+
+    public int getRawBonus() {
+        return finalBonus - abilityBonus;
     }
 
     public String getName() {
@@ -147,4 +159,77 @@ public class Skill extends Rollable implements Serializable {
     public static void setCheckPen(int checkPen) {
         Skill.checkPen = checkPen;
     }
+
+    /**** Textedit Functions ****/
+
+    public static String getSkillTypeString(SkillType type) {
+        switch (type) {
+            case BODY:
+                return "BODY";
+            case FLEX:
+                return "FLEX";
+            case MIND:
+                return "MIND";
+        }
+        return null;
+    }
+
+    public String toPartialString() {
+        Columns column = getPartialSkillHeader();
+        return addPartialToColumn(column).toString();
+    }
+
+    public static Columns getPartialSkillHeader() {
+        return new Columns().addLine("Name", "Raw", "+Abil", "Abil", "");
+    }
+
+    public Columns addPartialToColumn(Columns column) {
+        return column.addLine(name, "" + getRawBonus(), "" + getFinalBonus(), abilityName, subSkillsToString());
+    }
+
+    public String toFullString() {
+        Columns column = getFullSkillHeader();
+        return addAllToColumn(column).toString();
+    }
+
+    public static Columns getFullSkillHeader() {
+        return new Columns().addLine("Name", "Raw", "+Abil", "Abil", "Proficiency", "Take", "Min", "|", "Item",
+                "Enhance", "Spec", "Temp", "Focus", "");
+    }
+
+    public Columns addAllToColumn(Columns column) {
+        return column.addLine(name, "" + getRawBonus(), "" + getFinalBonus(), "" + abilityName, "" + getProfLevel(),
+                "" + take, "" + min, "|", "" + itemBonus, "" + enhanceBonus, "" + specBonus, "" + tempBonus, "" + focus,
+                subSkillsToString());
+    }
+
+    public String subSkillsToString() {
+        StringBuilder subStr = new StringBuilder("");
+        Collection<SubSkill> subs = subSkills.values();
+        for(SubSkill s:subs) {
+            if(s.active) {
+                subStr.append("\n\tActive Subskill: " + s.name);
+            }
+        }
+        return subStr.toString();
+    }
+
+    public String subSkillsToString(boolean showInactive) {
+        if(!showInactive) {
+            return subSkillsToString();
+        }
+
+        StringBuilder subStr = new StringBuilder("");
+        Collection<SubSkill> subs = subSkills.values();
+        for(SubSkill s:subs) {
+            if(s.active) {
+                subStr.append("\n\tActive Subskill: " + s.name);
+
+            } else {
+                subStr.append("\n\tInactive Subskill: " + s.name);
+            }
+        }
+        return subStr.toString();
+    }
+
 }

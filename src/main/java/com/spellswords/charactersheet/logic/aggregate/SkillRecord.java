@@ -1,6 +1,10 @@
 package com.spellswords.charactersheet.logic.aggregate;
 
+import com.spellswords.charactersheet.utilities.Columns;
+
 import java.io.*;
+import java.sql.PseudoColumnUsage;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -10,21 +14,24 @@ public class SkillRecord implements Serializable {
     private HashMap<String, Skill> skills;
     private HashMap<String, PseudoSkill> pSkills;
     private SkillPoints skillPoints;
-    private AbilityCollection abilities;
-    private LevelRecord record;
-    private static final String defaultPath = "src/main/resources/configs/defaultSkills.csv";
+//    private static AbilityCollection abilities;
+//    private static LevelRecord record;
+    private transient static final String defaultPath = "src/main/resources/configs/defaultSkills.csv";
+
+    SkillRecord() {}
 
     public SkillRecord(AbilityCollection abilities, LevelRecord level) throws FileNotFoundException, IOException {
         // Load default abilities
-        record = level;
-        this.abilities = abilities;
+//        record = level;
+//        SkillRecord.abilities = abilities;
         skills = new HashMap<>();
         pSkills = new HashMap<>();
-        readSkillsFromFile(defaultPath);
-        skillPoints = new SkillPoints(record.calculateSkillPoints(), abilities);
+        readSkillsFromFile(defaultPath, abilities);
+//        skillPoints = new SkillPoints(record.calculateSkillPoints(), abilities);
+        skillPoints = new SkillPoints(0, abilities, level);
     }
 
-    private void readSkillsFromFile(String filepath) throws FileNotFoundException, IOException {
+    private void readSkillsFromFile(String filepath, AbilityCollection abilities) throws FileNotFoundException, IOException {
         BufferedReader csvReader = new BufferedReader((new FileReader(filepath)));
         String row;
         String name = "";
@@ -78,10 +85,14 @@ public class SkillRecord implements Serializable {
                 lastSkill = new Skill(name, ability, type, abilities);
                 addSkill(lastSkill);
             } else {
-                SubSkill sub = new SubSkill(lastSkill, name, cost);
+                SubSkill sub = new SubSkill(name, cost);
                 lastSkill.addSubSkill(sub);
             }
         }
+    }
+
+    public boolean skillExists(String skillName) {
+        return skills.containsKey(skillName);
     }
 
     public void setSkillProf(String skillName, int profLevel) {
@@ -90,11 +101,23 @@ public class SkillRecord implements Serializable {
         skillPoints.setSkillProf(skill, profLevel);
     }
 
-    public void updateSkills() {
+    public void updateSkills(AbilityCollection abilities, LevelRecord level) {
+        skillPoints.updatePoints(abilities, level);
+        skillPoints.reset();
         Collection<Skill> sc = skills.values();
         for(Skill s:sc) {
             s.updateAbility(abilities);
+            skillPoints.spendSkillPoints(s.getType(), s.getNumSkillPoints());
         }
+
+        Collection<PseudoSkill> psc = pSkills.values();
+        for(PseudoSkill ps:psc) {
+            skillPoints.spendSkillPoints(ps.getSkillType(), ps.getNumSkillPoints());
+        }
+    }
+
+    public void spendSkillPoints(SkillType type, int points) {
+        skillPoints.spendSkillPoints(type, points);
     }
 
     public void addSkill(Skill skill) {
@@ -105,16 +128,48 @@ public class SkillRecord implements Serializable {
         return skills.get(skillName);
     }
 
+    public void addPseudoSkill(PseudoSkill pskill) {
+        pSkills.put(pskill.getName(), pskill);
+        skillPoints.spendSkillPoints(pskill.getSkillType(), pskill.getNumSkillPoints());
+    }
+
+    public void removePseudoSkill(PseudoSkill pskill) {
+        skillPoints.spendSkillPoints(pskill.getSkillType(), -1 * pskill.getNumSkillPoints());
+        pSkills.remove(pskill.getName());
+    }
+
+    public PseudoSkill getPseudoSkill(String key) {
+        return pSkills.get(key);
+    }
+
+    public boolean hasPseudoSkills() {
+        return !pSkills.isEmpty();
+    }
+
     /************* TextAdventure Functions **********/
 
-    public String toString() {
-        StringBuilder srStr = new StringBuilder("Name\t\tRaw\t+Abil\tAbil\n");
+    public String skillPointsToString() {
+        return skillPoints.toString();
+    }
+
+    public String skillsToString() {
+        Columns srStr = Skill.getPartialSkillHeader();
         Collection<Skill> skillCollection = skills.values();
-        for(Skill s:skillCollection) {
-            srStr.append(s.getName() + "\t");
-            srStr.append((s.getFinalBonus() - s.getAbilityBonus()) + "\t");
-            srStr.append(s.getFinalBonus() + "\t");
-            srStr.append(s.getAbilityName() + "\n");
+        Skill sarray[] = skillCollection.toArray(new Skill[skillCollection.size()]);
+        Arrays.sort(sarray);
+        for(Skill s:sarray) {
+            srStr = s.addPartialToColumn(srStr);
+        }
+        return srStr.toString();
+    }
+
+    public String pseudoSkillsToString() {
+        Collection<PseudoSkill> pskillCollection = pSkills.values();
+        Columns srStr = PseudoSkill.getPartialPseudoSkillHeader();
+        PseudoSkill psarray[] = pskillCollection.toArray(new PseudoSkill[pskillCollection.size()]);
+        Arrays.sort(psarray);
+        for(PseudoSkill p:psarray) {
+            srStr = p.addPartialToColumn(srStr);
         }
         return srStr.toString();
     }

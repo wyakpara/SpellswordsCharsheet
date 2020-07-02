@@ -1,7 +1,9 @@
 package com.spellswords.charactersheet.logic.aggregate;
 
-public enum CharacterType {
+public enum ArchetypeType {
     MARTIAL,
     SPECIALIST,
-    PSIONIC
+    PSIONIC,
+    ARCANE,
+    DIVINE
 }

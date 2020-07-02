@@ -1,6 +1,9 @@
 package com.spellswords.charactersheet.logic.aggregate;
 
+import com.spellswords.charactersheet.utilities.Columns;
+
 import java.io.*;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -41,15 +44,15 @@ public class AbilityCollection implements Serializable {
     /************* TextAdventure Functions **********/
 
     public String toString() {
-        StringBuilder abStr = new StringBuilder("Name\tScore\tMod\n");
         Collection<AbilityScore> abs = abilities.values();
-        for(AbilityScore ab:abs) {
-            abStr.append(ab.getName() + "\t\t");
-            abStr.append(ab.getFinalScore() + "\t\t");
-            abStr.append(ab.getAbilityBonus() + "\n");
+        AbilityScore abArray[] = abs.toArray(new AbilityScore[abs.size()]);
+        Arrays.sort(abArray);
+        Columns abilsToPrint = AbilityScore.getPartialAbilHeader();
+        for(AbilityScore ab:abArray) {
+            abilsToPrint = ab.addPartialToColumn(abilsToPrint);
         }
 
-        return abStr.toString();
+        return abilsToPrint.toString();
     }
 
 

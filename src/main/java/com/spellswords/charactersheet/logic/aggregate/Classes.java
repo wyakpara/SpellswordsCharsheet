@@ -19,7 +19,7 @@ public class Classes implements Serializable {
         classes = new HashMap<>();
     }
     
-    public Classes(String[] names, CharacterType[] primaryTypes, CharacterType[] secondaryTypes, int[] HDs, int[] levels, int[] skills) {
+    public Classes(String[] names, ArchetypeType[] primaryTypes, ArchetypeType[] secondaryTypes, int[] HDs, int[] levels, int[] skills) {
         if(names.length != primaryTypes.length
             || names.length != secondaryTypes.length
             || names.length != HDs.length
@@ -32,7 +32,7 @@ public class Classes implements Serializable {
         }
     }
     
-    public void addClass(String name, CharacterType primaryType, CharacterType secondaryType, int HD, int level, int skill) {
+    public void addClass(String name, ArchetypeType primaryType, ArchetypeType secondaryType, int HD, int level, int skill) {
         classes.put(name, new CharClass(name, primaryType, secondaryType, HD, level, skill));
     }
     
@@ -60,11 +60,11 @@ public class Classes implements Serializable {
         classes.get(name).setName(newName);
     }
     
-    public void updateClassType(String name, CharacterType newType) {
+    public void updateClassType(String name, ArchetypeType newType) {
         classes.get(name).setType(newType);
     }
     
-    public void updateClassSecondary(String name, CharacterType newType) {
+    public void updateClassSecondary(String name, ArchetypeType newType) {
         classes.get(name).setType(newType);
     }
     

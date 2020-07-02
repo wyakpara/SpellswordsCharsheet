@@ -9,39 +9,34 @@ package com.spellswords.charactersheet.logic.aggregate;
  *
  * @author Didge
  */
-public class Feat {
-    String archetype;
+public class Feat implements Comparable<Feat> {
+    ArchetypeType archetype;
     String name;
     String description;
-    int tier;
-    int multiplier;
-    int number;
+
+    FeatType type;
+
+    int ufeatsUsed; // Number of universal feats used for this
+    int free; // Number of feats of this that were "free"
+
+    public Feat() {}
     
-    public Feat() {
-        archetype = "";
+    public Feat(ArchetypeType archetype) {
+        this.archetype = archetype;
         name = "";
         description = "";
-        tier = 0;
-        multiplier = 0;
     }
     
-    public Feat(String newName) {
+    public Feat(String newName, ArchetypeType archetype) {
         name = newName;
-        archetype = "";
+        this.archetype = archetype;
         description = "";
-        tier = 0;
-        multiplier = 0;
     }
-    
-    public Feat(String newName, String newArch, String newDesc, int newTier, int newMult, int num) {
-        name = newName;
-        archetype = newArch;
-        description = newDesc;
-        tier = newTier;
-        multiplier = newMult;
-        number = num;
+
+    public int compareTo(final Feat compare) {
+        return this.name.compareTo(compare.name);
     }
-    
+
     public void setName(String newName) {
         name = newName;
     }
@@ -58,35 +53,32 @@ public class Feat {
         return description;
     }
     
-    public void setArchetype(String newArch) {
+    public void setArchetype(ArchetypeType newArch) {
         archetype = newArch;
     }
     
-    public String getArchetype() {
+    public ArchetypeType getArchetype() {
         return archetype;
     }
-    
-    public void setTier(int newTier) {
-        tier = newTier;
+
+    public int getUfeatsUsed() {
+        return ufeatsUsed;
     }
-    
-    public int getTier() {
-        return tier;
+
+    public void setUfeatsUsed(int ufeatsUsed) {
+        this.ufeatsUsed = ufeatsUsed;
     }
-    
-    public void setMult(int mult) {
-        multiplier = mult;
+
+    public int getFree() {
+        return free;
     }
-    
-    public int getMult() {
-        return multiplier;
+
+    public void setFree(int free) {
+        this.free = free;
     }
-    
-    public void setNum(int num) {
-        number = num;
+
+    public FeatType getType() {
+        return type;
     }
-    
-    public int getNum() {
-        return number;
-    }
+
 }

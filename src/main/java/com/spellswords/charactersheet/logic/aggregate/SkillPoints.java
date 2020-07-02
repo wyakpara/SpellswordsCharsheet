@@ -1,5 +1,7 @@
 package com.spellswords.charactersheet.logic.aggregate;
 
+import com.spellswords.charactersheet.utilities.Columns;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -8,28 +10,49 @@ import static com.spellswords.charactersheet.logic.aggregate.SkillType.*;
 public class SkillPoints implements Serializable {
     int level;
 
+    int flexFromChar;
+    private int intScore;
+
     int flex, flexSpent;
     int body, bodySpent;
     int mind, mindSpent;
 
-    public SkillPoints(int flexFromChar, AbilityCollection abilityCollection) {
+    SkillPoints() {}
+
+    public SkillPoints(int flexFromChar, AbilityCollection abilityCollection, LevelRecord level) {
+        this.level = level.getLevel();
         flexSpent = bodySpent = mindSpent = 0;
-        updatePoints(abilityCollection, flexFromChar);
+        this.flexFromChar = flexFromChar;
+        updatePoints(abilityCollection, level);
     }
 
-    public SkillPoints(int flexFromChar, AbilityCollection abilityCollection, int level) {
+    public void setLevel(int level) {
         this.level = level;
-        flexSpent = bodySpent = mindSpent = 0;
-        updatePoints(abilityCollection, flexFromChar);
+        updatePoints();
     }
 
-    private void updatePoints(AbilityCollection abilityCollection, int flexFromChar) {
+    public void setFlexFromChar(int flexFromChar) {
+        this.flexFromChar = flexFromChar;
+        updatePoints();
+    }
+
+    public void updatePoints(AbilityCollection abilityCollection, LevelRecord level) {
         body = abilityCollection.getAbility("STR").getBaseScore() / 2;
         body += abilityCollection.getAbility("DEX").getBaseScore() / 2;
         body += abilityCollection.getAbility("CON").getBaseScore() / 2;
         mind = abilityCollection.getAbility("WIS").getBaseScore() / 2;
         mind += abilityCollection.getAbility("CHA").getBaseScore() / 2;
-        flex = Math.min(flexFromChar + abilityCollection.getAbility("INT").getAbilityBonus() * level, 0);
+        intScore = abilityCollection.getAbility("INT").getAbilityBonus();
+        this.level = level.getLevel();
+        flex = Math.max(flexFromChar + level.calculateSkillPoints() + intScore * this.level, 0);
+    }
+
+    public void updatePoints() {
+        flex = Math.max(flexFromChar + intScore * level, 0);
+    }
+
+    public void reset() {
+        flexSpent = bodySpent = mindSpent = 0;
     }
 
     public void setSkillProf(Skill skill, int profLevel) {
@@ -106,5 +129,19 @@ public class SkillPoints implements Serializable {
                 }
             }
         }
+    }
+
+    public int getFlexFromChar() {
+        return flexFromChar;
+    }
+
+    /**** Textedit Functions ****/
+    public String toString() {
+        return new Columns()
+                .addLine("Point Type", "Total", "Spent", "Left")
+                .addLine("Flex", "" + flex, "" + flexSpent, "" + (flex - flexSpent))
+                .addLine("Body", "" + body, "" + bodySpent, "" + (body - bodySpent))
+                .addLine("Mind", "" + mind, "" + mindSpent, "" + (mind - mindSpent))
+                .toString();
     }
 }

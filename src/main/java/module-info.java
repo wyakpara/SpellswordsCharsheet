@@ -3,9 +3,11 @@ module com.spellswords.charactersheet {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.logging;
-    requires org.controlsfx.controls;
-    requires java.xml.bind;
-    requires com.sun.xml.bind;
+//    requires org.controlsfx.controls;
+//    requires java.xml.bind;
+//    requires com.sun.xml.bind;
+//    requires com.google.gson;
+//    requires org.fusesource.jansi;
 
     exports com.spellswords.charactersheet to
             javafx.graphics,
@@ -33,6 +35,7 @@ module com.spellswords.charactersheet {
             com.sun.xml.bind;
 
     opens com.spellswords.charactersheet to
+            com.google.gson,
             javafx.graphics,
             javafx.fxml;
 
@@ -45,6 +48,7 @@ module com.spellswords.charactersheet {
             javafx.fxml;
 
     opens com.spellswords.charactersheet.logic.aggregate to
+            com.google.gson,
             com.sun.xml.bind;
 
     opens com.spellswords.charactersheet.components.aggregate to
