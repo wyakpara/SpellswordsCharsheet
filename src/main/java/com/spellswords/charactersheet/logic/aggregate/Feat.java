@@ -5,6 +5,8 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import static com.spellswords.charactersheet.logic.aggregate.FeatType.NONE;
+
 /**
  *
  * @author Didge
@@ -31,6 +33,17 @@ public class Feat implements Comparable<Feat> {
         name = newName;
         this.archetype = archetype;
         description = "";
+    }
+
+    public boolean isPlaceholder() {
+        if(this.type == NONE) return true;
+        return false;
+    }
+
+    public static Feat getPlaceholderFeat() {
+        Feat placeholder = new Feat("", ArchetypeType.SPECIALIST);
+        placeholder.setType(NONE);
+        return placeholder;
     }
 
     public int compareTo(final Feat compare) {
@@ -79,6 +92,10 @@ public class Feat implements Comparable<Feat> {
 
     public FeatType getType() {
         return type;
+    }
+
+    public void setType(FeatType type) {
+        this.type = type;
     }
 
 }

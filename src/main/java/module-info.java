@@ -6,7 +6,7 @@ module com.spellswords.charactersheet {
 //    requires org.controlsfx.controls;
 //    requires java.xml.bind;
 //    requires com.sun.xml.bind;
-//    requires com.google.gson;
+    requires com.google.gson;
 //    requires org.fusesource.jansi;
 
     exports com.spellswords.charactersheet to

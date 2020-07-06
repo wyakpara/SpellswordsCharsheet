@@ -20,9 +20,9 @@ public class FeatRecord {
         trees = new ArrayList<>();
     }
 
-    public void addNewTree(Feat root) {
+    public void addNewTree(Feat root, int tier) {
         FeatTree tree = new FeatTree();
-        tree.addPrimary(root, 1);
+        tree.addPrimary(root, tier);
         trees.add(tree);
         Collections.sort(trees);
     }
@@ -80,7 +80,7 @@ public class FeatRecord {
         }
     }
 
-    private void spendFeats() {
+    public void spendFeats() {
         mspent = sspent = pspent = aspent = dspent = uspent = 0;
         // First go through all trees and add up the costs of the regular skills
         for(FeatTree tree:trees) {
@@ -131,14 +131,18 @@ public class FeatRecord {
         return trees.get(index);
     }
 
+    public void removeTree(FeatTree tree) {
+        trees.remove(tree);
+    }
+
     /** Textedit Functions **/
     public String featTreesToString() {
-        Columns featTreeStr = new Columns().addLine("Index", "Tree Name", "Archetype");
+        Columns featTreeStr = FeatTree.getHeader();
         Collections.sort(trees);
-        Feat root;
+        FeatTree tree;
         for(int i = 0; i < trees.size(); i++) {
-            root = trees.get(i).getRoot();
-            featTreeStr = featTreeStr.addLine((i + 1) + "", root.getName(), root.getType().toString());
+            tree = trees.get(i);
+            featTreeStr = tree.compoundString(featTreeStr, i + 1);
         }
         return featTreeStr.toString();
     }
@@ -163,6 +167,10 @@ public class FeatRecord {
 
         if(DFeats > 0) {
             featRecord = featRecord.addLine("Divine", "" + (DFeats - dspent), "|", DFeats + "", dspent + "");
+        }
+
+        if(UFeats > 0) {
+            featRecord = featRecord.addLine("Universal", "" + (UFeats - uspent), "|", UFeats + "", uspent + "");
         }
 
         return featRecord.toString();

@@ -5,6 +5,8 @@
  */
 package com.spellswords.charactersheet.logic.aggregate;
 
+import com.spellswords.charactersheet.utilities.Columns;
+
 /**
  *
  * @author Didge
@@ -21,36 +23,34 @@ public class Health {
         
     }
     
-    public Health(Classes classes, AbilityScore con, int hpbonus, int stambonus) {
+    public Health(LevelRecord levelRecord, AbilityCollection abilities) {
         HPLost = StamLost = 0;
-        setItUp(classes, con, hpbonus, stambonus);
+        calcluateFromLevels(levelRecord, abilities);
     }
     
-    public void setItUp(Classes classes, AbilityScore con, int hpbonus, int stambonus) {
+    public void calcluateFromLevels(LevelRecord levelRecord, AbilityCollection abilities) {
         // Stam is con bonus * level + total HD + bonus
-        //StamLvl = con.getMod() * classes.getTotalLevel() + classes.getSumHDs();
+        AbilityScore con = abilities.getAbility("CON");
+        StamCon = con.getMod() * levelRecord.getLevel();
         // Stamina is the sum of all hit die
-        StamLvl = classes.getSumHDs();
-        StamBonus = stambonus;
-        Stam = StamLvl + StamBonus;
-        
+        StamLvl = levelRecord.calculateHD();
+
+        Stam = StamLvl + StamCon + StamBonus;
+
         // HP is con val + Stam/4 + HPbonus
         HPCon = con.getFinalScore();
         HPStam = Stam/4;
-        HPBonus = hpbonus;
         HP = HPCon + HPStam + HPBonus;
     }
     
     public void updateBonusHP(int bonus) {
-        HP -= HPBonus;
         HPBonus = bonus;
-        HP += HPBonus;
+        HP = HPCon + HPStam + HPBonus;
     }
     
     public void updateBonusStam(int bonus) {
-        Stam -= StamBonus;
         StamBonus = bonus;
-        Stam += StamBonus;
+        Stam = StamLvl + StamCon + StamBonus;
     }
     
     public int getHP() {
@@ -67,6 +67,14 @@ public class Health {
     
     public int getCurrentStam() {
         return Stam - StamLost;
+    }
+
+    /** Textedit functions **/
+
+    public String toString() {
+        Columns healthStr = new Columns().addLine("Stam Max", "HP Max", "Bonus Stam", "Bonus HP");
+        healthStr = healthStr.addLine(Stam + "", HP + "", StamBonus + "", HPBonus + "");
+        return healthStr.toString();
     }
 
 }

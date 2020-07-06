@@ -43,6 +43,15 @@ public class LevelRecord implements Serializable {
         return skillpoints;
     }
 
+    public int calculateHD() {
+        int hd = 0;
+        Collection<CharClass> cs = charClasses.values();
+        for(CharClass c:cs) {
+            hd += c.getHD() * c.getLevel();
+        }
+        return hd;
+    }
+
     public Collection<CharClass> getCollection() {
         return charClasses.values();
     }

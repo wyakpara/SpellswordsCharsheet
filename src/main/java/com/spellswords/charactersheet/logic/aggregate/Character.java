@@ -20,6 +20,7 @@ import java.util.Collection;
 public class Character implements Serializable {
     public String charName;
     private LevelRecord levels;
+    private Health health;
     private SkillRecord skillRecord;
     private AbilityCollection abilityCollection;
     private FeatRecord featRecord;
@@ -40,6 +41,7 @@ public class Character implements Serializable {
         abilityCollection = new AbilityCollection();
         generateStandardAbilities();
         skillRecord = new SkillRecord(abilityCollection, levels);
+        health = new Health(levels, abilityCollection);
     }
 
     public Character (String charName, CharClass firstClass) throws IOException {
@@ -49,6 +51,7 @@ public class Character implements Serializable {
         generateStandardAbilities();
         skillRecord = new SkillRecord(abilityCollection, levels);
         featRecord = new FeatRecord();
+        health = new Health(levels, abilityCollection);
     }
 
     public void generateStandardAbilities() {
@@ -152,6 +155,12 @@ public class Character implements Serializable {
         Proficiency.setLevel(levels.getLevel());
         abilityCollection.updateAbilities();
         skillRecord.updateSkills(abilityCollection, levels);
+        featRecord.calculateNumFeats(levels);
+        featRecord.spendFeats();
+        if(health == null) {
+            health = new Health(levels, abilityCollection);
+        }
+        health.calcluateFromLevels(levels, abilityCollection);
     }
 
     public void addAbility(AbilityScore ability) {
@@ -160,6 +169,14 @@ public class Character implements Serializable {
 
     public AbilityScore getAbility(String key) {
         return abilityCollection.getAbility(key);
+    }
+
+    public void setBonusHP(int bonus) {
+        health.updateBonusHP(bonus);
+    }
+
+    public void setBonusStam(int bonus) {
+        health.updateBonusStam(bonus);
     }
 
     public void spendSkillPoints(SkillType type, int pointsSpent) {
@@ -176,6 +193,10 @@ public class Character implements Serializable {
 
     public Collection<CharClass> getClasses() {
         return levels.charClasses.values();
+    }
+
+    public Health getHealth() {
+        return health;
     }
 
     public void addSkill(Skill skill) {
@@ -212,6 +233,9 @@ public class Character implements Serializable {
         charToString.append("ABILITIES\n");
         charToString.append(abilityCollection.toString());
         charToString.append(breakline);
+        charToString.append("HEALTH\n");
+        charToString.append(health.toString());
+        charToString.append(breakline);
         charToString.append("SKILL POINTS\n");
         charToString.append(skillRecord.skillPointsToString());
         charToString.append(breakline);
@@ -221,8 +245,10 @@ public class Character implements Serializable {
         charToString.append("PSEUDO SKILLS\n");
         charToString.append(skillRecord.pseudoSkillsToString());
         charToString.append(breakline);
-        charToString.append("FEATS");
+        charToString.append("FEAT RESOURCES\n");
         charToString.append(featRecord.featResourcesToString());
+        charToString.append(breakline);
+        charToString.append("FEATS\n");
         charToString.append(featRecord.featTreesToString());
         return charToString.toString();
     }

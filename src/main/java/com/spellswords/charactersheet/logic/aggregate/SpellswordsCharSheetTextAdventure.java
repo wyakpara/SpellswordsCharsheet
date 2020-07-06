@@ -56,11 +56,11 @@ public class SpellswordsCharSheetTextAdventure {
                     characterMenu();
                     break;
                 case 2:
-                    System.out.println("Character file path:");
+                    System.out.println("Character name:");
                     String filename = scanner.next();
 //                    character = Character.loadCharacterXML(filename);
 //                    character = Character.loadCharacter(filename);
-                    character = Character.loadCharacterJson(filename);
+                    character = Character.loadCharacterJson(filename + ".json");
                     if(character == null) {
                         System.out.println("Unable to load character!");
                         continue;
@@ -80,12 +80,13 @@ public class SpellswordsCharSheetTextAdventure {
             System.out.println("1) View Character");
             System.out.println("2) Edit Classes");
             System.out.println("3) Edit Abilities");
-            System.out.println("4) Edit Skills");
-            System.out.println("5) Edit Pseudo Skills");
-            System.out.println("6) Edit Feats");
-            System.out.println("7) Edit Items");
-            System.out.println("8) Save Character");
-            System.out.println("9) Quit");
+            System.out.println("4) Edit Health");
+            System.out.println("5) Edit Skills");
+            System.out.println("6) Edit Pseudo Skills");
+            System.out.println("7) Edit Feats");
+            System.out.println("8) Edit Items");
+            System.out.println("9) Save Character");
+            System.out.println("10) Quit");
             input = readUntilInt();
 
             switch (input) {
@@ -99,24 +100,31 @@ public class SpellswordsCharSheetTextAdventure {
                     editAbilities();
                     break;
                 case 4:
-                    editSkills();
+                    editHealth();
                     break;
                 case 5:
-                    editPseudoSkills();
+                    editSkills();
                     break;
                 case 6:
+                    editPseudoSkills();
+                    break;
+                case 7:
                     editFeats();
+                    break;
                 case 8:
+                    editInventory();
+                    break;
+                case 9:
 //                    Character.saveCharacterXML(character);
                     Character.saveCharacterJson(character);
 //                    Character.saveCharacter(character);
                     break;
                 default:
-                    if(input != 9) System.out.println("Option not supported!");
+                    if(input != 10) System.out.println("Option not supported!");
                     break;
             }
             character.updateAll();
-        } while(input != 9);
+        } while(input != 10);
     }
 
     private void editClasses() {
@@ -327,6 +335,31 @@ public class SpellswordsCharSheetTextAdventure {
             }
             if(choice == 8) break;
         } while (input != i);
+    }
+
+    private void editHealth() {
+        int choice;
+        Health health = character.getHealth();
+        System.out.println(health.toString());
+        do {
+            System.out.println("Choose an option:");
+            System.out.println("1) Set bonus stamina");
+            System.out.println("2) Set bonus hit points");
+            System.out.println("3) Done");
+
+            choice = readUntilInt();
+
+            switch(choice) {
+                case 1:
+                    System.out.println("Enter new bonus stamina:");
+                    health.updateBonusStam(readUntilInt());
+                    break;
+                case 2:
+                    System.out.println("Enter new bonus HP:");
+                    health.updateBonusHP(readUntilInt());
+                    break;
+            }
+        } while(choice != 3);
     }
 
     private void editSkills() {
@@ -702,14 +735,61 @@ public class SpellswordsCharSheetTextAdventure {
         int numTrees = record.getNumTrees();
         FeatTree treeToEdit;
 
+        // Special - if getNumTrees is 0, create a new dummy tree
+        if(numTrees == 0) {
+            System.out.println("No feat trees, add your first feat!");
+
+            int at;
+            ArchetypeType arch = ArchetypeType.MARTIAL;
+            boolean done;
+            do {
+                done = true;
+                System.out.println("Enter archetype of first feat:");
+                System.out.println("1) Martial");
+                System.out.println("2) Specialist");
+                System.out.println("3) Psionic");
+                System.out.println("4) Cancel");
+
+                at = readUntilInt();
+
+                switch (at) {
+                    case 1:
+                        arch = ArchetypeType.MARTIAL;
+                        break;
+                    case 2:
+                        arch = ArchetypeType.SPECIALIST;
+                        break;
+                    case 3:
+                        arch = ArchetypeType.PSIONIC;
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        done = false;
+                        System.out.println("Invalid choice, try again...");
+                }
+
+            } while(!done);
+
+            System.out.println("Enter tier:");
+            int tier = readUntilInt();
+
+            FeatTree tree = new FeatTree();
+            record.addNewTree(newFeatWizard(tree, arch, tier), tier);
+            numTrees = record.getNumTrees();
+            record.spendFeats();
+
+        }
+
         do {
-            System.out.println("Select skill tree to edit, or 0 to quit:");
-            System.out.println(record.featTreesToString());
-            System.out.println(numTrees + ") Add new tree from primary feat");
+            System.out.println("FEAT TREE EDITOR");
+            System.out.println("Select feat tree to edit, or 0 to quit:");
+            System.out.print(record.featTreesToString());
+            System.out.println((numTrees + 1) + ") Add new tree from primary feat");
 
             choice = readUntilInt();
 
-            if(choice > 0 && choice < numTrees - 1) {
+            if(choice > 0 && choice <= numTrees) {
                 treeIndex = choice - 1;
                 treeToEdit = record.getTreeAt(treeIndex);
 
@@ -719,6 +799,7 @@ public class SpellswordsCharSheetTextAdventure {
                     System.out.println(treeToEdit.toString());
                     System.out.println("1) Edit existing feat");
                     System.out.println("2) Add feat");
+                    System.out.println("3) Remove tree");
                     System.out.println("4) Done");
 
                     featChoice = readUntilInt();
@@ -726,21 +807,190 @@ public class SpellswordsCharSheetTextAdventure {
                     // 1 Search feat in tree, find its indices and open for editing
                     if(featChoice == 1) {
                         String search;
-                        System.out.print("Enter case-sensitive feat to edit: ");
-                        scanner.nextLine();
-                        search = scanner.nextLine();
+                        Feat found;
+                        boolean first = true;
+                        do {
+                            System.out.print("Enter case-sensitive feat to edit, or 'q' to quit: ");
+                            if(first) {
+                                scanner.nextLine();
+                                first = false;
+                            }
+                            search = scanner.nextLine();
+                            if(search.equals("q")) {
+                                break;
+                            }
 
+                            found = treeToEdit.findFeat(search);
+
+                            if(found == null) {
+                                System.out.println("No feat by that name in this tree! Try again.");
+                                continue;
+                            }
+
+                            first = true;
+
+                            if(null == editFeat(found)) {
+                                // Remove feat from tree
+                                treeToEdit.removeFeat(found);
+                                System.out.println("Feat removed");
+                            }
+                            found = null;
+
+                        } while (found == null);
 
                     }
+                    else if(featChoice == 2) {
+                        newFeatWizard(treeToEdit);
+                    }
+                    else if(featChoice == 3) {
+                        record.removeTree(treeToEdit);
+                        System.out.println("Feat tree removed");
+                    }
+                    else if(featChoice != 4){
+                        System.out.println("Unrecognized choice");
+                    }
 
-                    // 2 Add feat wizard
+                    numTrees = record.getNumTrees();
 
-                } while(featChoice != 3);
+                } while(featChoice != 4);
 
-                // View tree, allow editing of tree
-            } else if (choice == numTrees) {
+            } else if (choice == numTrees + 1) {
+                // New tree from primary feat
+                int at;
+                ArchetypeType arch = ArchetypeType.MARTIAL;
+                boolean done;
+                do {
+                    done = true;
+                    System.out.println("Enter archetype of first feat:");
+                    System.out.println("1) Martial");
+                    System.out.println("2) Specialist");
+                    System.out.println("3) Psionic");
+                    System.out.println("4) Cancel");
+
+                    at = readUntilInt();
+
+                    switch (at) {
+                        case 1:
+                            arch = ArchetypeType.MARTIAL;
+                            break;
+                        case 2:
+                            arch = ArchetypeType.SPECIALIST;
+                            break;
+                        case 3:
+                            arch = ArchetypeType.PSIONIC;
+                            break;
+                        case 4:
+                            return;
+                        default:
+                            done = false;
+                            System.out.println("Invalid choice, try again...");
+                    }
+
+                } while(!done);
+
+                System.out.println("Enter tier:");
+                int tier = readUntilInt();
+                FeatTree tree = new FeatTree();
+                record.addNewTree(newFeatWizard(tree, arch, tier), tier);
+
             }
+            numTrees = record.getNumTrees();
+            record.spendFeats();
         } while (choice != 0);
+    }
+
+    private Feat editFeat(Feat feat) {
+        int choice;
+
+        do {
+            System.out.println("1) Edit Name");
+            System.out.println("2) Edit Description");
+            System.out.println("3) Edit Number of Universal Feats used");
+            System.out.println("4) Edit Number of Free Feats used");
+            System.out.println("5) Remove Feat from tree");
+            System.out.println("6) Done");
+
+            choice = readUntilInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter new name: ");
+                    scanner.nextLine();
+                    String name = scanner.nextLine();
+                    feat.setName(name);
+                    break;
+                case 2:
+                    System.out.print("Enter new description: ");
+                    scanner.nextLine();
+                    String description = scanner.nextLine();
+                    feat.setDescription(description);
+                    break;
+                case 3:
+                    System.out.println("Enter number of universal feats to spend:");
+                    int numUfeats = readUntilInt();
+                    feat.setUfeatsUsed(numUfeats);
+                    break;
+                case 4:
+                    System.out.println("Enter number of free feats to spend:");
+                    int numFreeFeats = readUntilInt();
+                    feat.setFree(numFreeFeats);
+                    break;
+                case 5:
+                    return null;
+            }
+        } while (choice != 6);
+        return feat;
+    }
+
+    private Feat newFeatWizard(FeatTree featTree, ArchetypeType arch, int tier) {
+        System.out.println("Enter feat name:");
+        scanner.nextLine();
+        String featName = scanner.nextLine();
+        Feat addme = new Feat(featName, arch);
+
+        System.out.println("Enter feat description:");
+//        scanner.nextLine();
+        String featDesc = scanner.nextLine();
+        addme.setDescription(featDesc);
+
+        System.out.println("Enter number of universal feats to use:");
+        int numUfeats = readUntilInt();
+        addme.setUfeatsUsed(numUfeats);
+
+        System.out.println("Enter number of free feats to use:");
+        int numFfeats = readUntilInt();
+        addme.setFree(numFfeats);
+
+        int ps;
+        do {
+            System.out.println("Enter feat type:");
+            System.out.println("1) Primary");
+            System.out.println("2) Secondary");
+
+            ps = readUntilInt();
+        } while(!(ps == 2 || ps == 1));
+
+        if(ps == 1) {
+            featTree.addPrimary(addme, tier);
+        } else {
+            featTree.addSecondary(addme, tier);
+        }
+        return addme;
+    }
+
+    private Feat newFeatWizard(FeatTree featTree) {
+        System.out.println("Enter tier:");
+        int tier = readUntilInt();
+        return newFeatWizard(featTree, featTree.getArchetype(), tier);
+    }
+
+    private void editInventory() {
+        // Add item
+        // Weapon or armor?
+        // Weapon and armor wizards
+        // Make weapon class
+        // Make armor class
+        System.out.println("Inventory not supported yet");
     }
 
     /**** HELPER FUNCTIONS *****/
