@@ -666,7 +666,7 @@ public class SpellswordsCharSheetTextAdventure {
                                 break;
                             case 3:
                                 int freeChoice;
-                                before = toEdit.getNumSkillPoints();
+//                                before = toEdit.getNumSkillPoints();
                                 do {
                                     System.out.println("Select a proficiency level to be free:");
                                     System.out.println("1) Level 1");
@@ -694,7 +694,7 @@ public class SpellswordsCharSheetTextAdventure {
                                     }
                                 } while(freeChoice != 5);
 
-                                character.spendSkillPoints(toEdit.getSkillType(), toEdit.getNumSkillPoints() - before);
+//                                character.spendSkillPoints(toEdit.getSkillType(), toEdit.getNumSkillPoints() - before);
                                 break;
                         }
                     } while(choice != 4);
@@ -1017,9 +1017,15 @@ public class SpellswordsCharSheetTextAdventure {
     }
 
     private int readUntilInt() {
+        int tries = 3;
         while(scanner.hasNext()) {
             if(scanner.hasNextInt()) {
                 return scanner.nextInt();
+            }
+            tries--;
+            if(tries == 0) {
+                System.out.println("Error reading integer input");
+                return 0;
             }
             scanner.next();
         }

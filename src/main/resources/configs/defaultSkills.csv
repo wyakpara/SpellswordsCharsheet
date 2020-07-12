@@ -23,6 +23,7 @@ SubSkill,Sailing,3
 Skill,Perception,WIS,FLEX
 Skill,Survival,WIS,FLEX
 SubSkill,Navigation,3
+SubSkill,Cartography & Geography,3
 Skill,Trickery,CHA,FLEX
 SubSkill,Sleight of Hand,3
 SubSkill,Disguise,3
@@ -35,6 +36,7 @@ SubSkill,Alchemy,3
 SubSkill,Trivia,3
 Skill,Architecture,INT,MIND
 SubSkill,Masonry,3
+SubSkill,Engineering,3
 Skill,Art,CHA,MIND
 SubSkill,Author,3
 SubSkill,Painter,3
@@ -43,7 +45,10 @@ SubSkill,Sculptor,3
 Skill,Business,INT,MIND
 Skill,Civics,INT,MIND
 SubSkill,Law,3
+SubSkill,Politics,3
+Skill,Culture,INT,MIND
 SubSkill,History,3
+SubSkill,Heraldry,3
 Skill,Diplomacy,CHA,MIND
 SubSkill,Teaching,3
 Skill,Instinct,WIS,MIND

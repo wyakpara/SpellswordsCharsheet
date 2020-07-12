@@ -61,8 +61,12 @@ public class CharacterSheet /*extends Application*/ {
         boolean textEdit = false;
         for (String s : args) {
             //System.out.println("Arg: " + s);
-            if (s.equals("-t")) {
-                System.out.println("Running Text Adventure Character Sheet...");
+            if (s.equals("-jfx")) {
+                System.out.println("Running java FX...");
+                textEdit = false;
+                break;
+            } else {
+                System.out.println("Running textEdit...");
                 textEdit = true;
                 break;
             }
